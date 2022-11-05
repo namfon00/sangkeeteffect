@@ -1,0 +1,5 @@
+{
+    "port":80,
+    "templates path":"",
+    "home path":"/templates/home.html"
+}
