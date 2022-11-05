@@ -6,7 +6,10 @@ import json
 app = FastAPI()
 #หาpathปัจจุบันของโปรเจค
 cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
+
+#อ่านไฟล์ config
 config = json.loads(open(cur_path_of_py_file+"/data/config.json").read())
+
 tem_path = config["templates path"] if config["templates path"] != "" else cur_path_of_py_file
 
 @app.get("/")
