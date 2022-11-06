@@ -1,0 +1,5 @@
+fastapi == 0.86.0
+"uvicorn[standard]" == 0.19.0
+#=========Not In use now==========#
+#python-multipart == 0.0.5
+#pyngrok 5.1.0
