@@ -24,7 +24,7 @@ def search(keyword:str):
 
 @app.get("/admin/config")
 def config_html():
-    index_html = open(cur_path_of_py_file+"/templates/admin-config.html").read()
+    index_html = open(cur_path_of_py_file+"/templates/admin-config.txt").read()
     data_cf = {
         "port":config["port"],
         "path":config["templates path"],
