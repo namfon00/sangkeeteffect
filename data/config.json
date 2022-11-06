@@ -1,6 +1,1 @@
-{
-    "port":80,
-    "templates path":"",
-    "home path":"/templates/home.html",
-    "ngrok":["No","Token"]
-}
+{"port": 80, "templates path": "./", "home path": "/templates/home.html", "ngrok": ["No", "Token"]}
