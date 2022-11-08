@@ -38,7 +38,7 @@ def search(keyword:str):
 
 @app.get("/admin")
 def admin():
-    index_html = open(cur_path_of_py_file+"/templates/admin-login.html").read()
+    index_html = open(cur_path_of_py_file+"/templates/admin-login.txt").read()
     print(radminToken)
     return HTMLResponse(index_html)
 
