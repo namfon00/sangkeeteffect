@@ -23,6 +23,7 @@ def setNgrok():
     if bool(config["ngrok"]["on"]) and config["ngrok"]["token"] != "":
         ngrokModule.set_auth_token(config["ngrok"]["token"])
         ngrokLink = "<tr><th>%s</th></tr>"%ngrokModule.connect(config["port"])
+        print(ngrokLink)
     else:
         ngrokLink = ""
         ngrokModule.kill()
