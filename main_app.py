@@ -24,7 +24,7 @@ def genAdminToken():
     for i in range(20):
         adminToken += str(random.randrange(0,10))
     return adminToken
-radminToken = "1234"#genAdminToken()
+radminToken = genAdminToken()
 
 @app.get("/")
 def home():
@@ -47,20 +47,13 @@ def admin_login(response:Response,adminToken:str = Form("")):
     print(adminToken)
     if adminToken == radminToken:
         response.set_cookie(key="adminToken",value=adminToken)
-        return ""
+        return "สำเร็จ"
     response.delete_cookie(key="adminToken")
-    return HTMLResponse(
-    """
-    <script>
-        window.location.href = "/admin?wrongtoken=True"
-    </script>
-    """
-    )
+    return "Tokenผิดพลาด"
 
 
 @app.get("/admin/config")
 def config_html(adminToken  = Cookie(None,alias="adminToken")):
-    print(adminToken,radminToken)
     if adminToken != radminToken:
         return HTMLResponse(
         """
