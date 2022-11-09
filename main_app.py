@@ -8,8 +8,10 @@ import time
 
 app = FastAPI()
 #หาpathปัจจุบันของโปรเจค
-cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
-
+if __file__.find("\\") != -1:
+    cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
+else:
+    cur_path_of_py_file =  __file__[:__file__.rfind("/")]
 #อ่านไฟล์ config
 config = json.loads(open(cur_path_of_py_file+"/data/config.json").read())
 
@@ -128,5 +130,5 @@ def set_config(
         window.location.href = "./config"
     </script>
     """)
-
-uvicorn.run(app, port=int(config["port"]))
+    
+uvicorn.run(app)
