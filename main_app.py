@@ -46,7 +46,10 @@ setNgrok()
 def home():
     index_html = open(tem_path+config["template"]["home"]).read()
     return HTMLResponse(index_html.replace("/*text*/","Hello"))
-
+@app.get("/uploadsound")
+def uploadsound():
+    index_html = open(tem_path+"/templates/uploadsound.html").read()
+    return HTMLResponse(index_html)
 @app.get("/search")
 def search(keyword:str):
     index_html = open(tem_path+config["template"]["home"]).read()
