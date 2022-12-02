@@ -10,12 +10,11 @@ from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
 def setConfigFile():
     """create file config สร้างไฟล์config"""
     global cur_path_of_py_file
-    open(cur_path_of_py_file+"/data/config.json", "w").write("""{"host":"localhost","port": "8080", "parent path": "./", "template": {"home": "/templates/home.txt"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}}""")
-    print("set config file")
-def gen_AdminToken_and_ItemId():
+    open(cur_path_of_py_file+"/data/config.json", "w").write("""{"host": "localhost", "port": "8080", "parent path": "./", "template": {"home": "/templates/home.txt", "add_sound": "/templates/add_sound.txt", "info": "/templates/info.txt", "err404": "/templates/404.txt"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/data/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}}""")
+    print("set-cf")
+def gen_AdminToken_and_ItemId(_type:str = "token"):
     """Generate Token for Login and Generate Id for Item
-    สร้างTokenในการใช้Login และสร้าง Id สำหรับข้อมูล
-     -> str"""
+    สร้างTokenในการใช้Login และสร้าง Id สำหรับข้อมูล"""
     adminToken = ""
     for _ in range(20):
         i = random.randint(0,4)
@@ -27,15 +26,15 @@ def gen_AdminToken_and_ItemId():
         if i == 0:
             adminToken += random.choice(char[0])
         elif i == 1:
-            adminToken += random.choice(char[1])
+            adminToken += random.choice(char[1]) if _type == "token" else str(random.randrange(0, 10))
         elif i == 2:
             adminToken += random.choice(char[2])
         else:
             adminToken += str(random.randrange(0, 10))
-    print(adminToken)
+    print(adminToken if _type == "token" else "")
     return adminToken
 def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
-    """Render templates -> str
+    """Render templates
         Usage วิธีใช้
         /*name*/ in html for point position where should replace by value
         วาง /*n...*/ เพื่อรระบุตำแหน่งที่ะแทนค่า
@@ -44,6 +43,7 @@ def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
             render_templates("<h1>/*head1*/</h1>",{"head1":"Hello"})
             result : <h1>Hello</h1>
     """
+    #ช้ทดแทน Module templating ของ Fastapi ที่เกิดปัญหากับภาษาไทย
     if path != "":
         index_html = open(path, "r", encoding="utf-8").read()
     for i in data:
@@ -51,8 +51,9 @@ def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
     return index_html
 def redirect_url(url_path = "/"):
     """redirect_url"""
+    #ใช้ทดแทน Module RedirectResponse ของ Fastapi ที่เกิดปัญหา เปลี่ยนเส้นทางของคุณบ่อยเกินไป(ERR_TOO_MANY_REDIRECTS)
     return f"""<script> window.location.href = "{url_path}" </script>"""
-def alert(icon:str = "" ,mss:str = ""):
+def alert(icon:str = "info" ,mss:str = ""):
     if "wrong" in mss.lower() or "error" in mss.lower():
         icon = "error"
     elif "success" in mss.lower():
@@ -64,8 +65,8 @@ def alert(icon:str = "" ,mss:str = ""):
                 icon: '%s',
                 title: '%s',
                 color: '%s'
-                })
-            """%(icon, mss, '#f27474' if icon == "error" else "#a5dc86" if icon == "success" else "")
+                });
+            """%(icon, mss, "var(--bs-danger)" if icon == "error" else "var(--bs-success)" if icon == "success" else "")
     return result
 
 
@@ -112,6 +113,8 @@ KhunSangkeetE_User.app = app
 KhunSangkeetE_User.config = config
 KhunSangkeetE_User.parent_path = parent_path
 KhunSangkeetE_User.render_templates = render_templates
+KhunSangkeetE_User.genToken = gen_AdminToken_and_ItemId
+KhunSangkeetE_User.redirect = redirect_url
 KhunSangkeetE_User.userSys()
 app = KhunSangkeetE_User.app
 
@@ -122,9 +125,5 @@ class UnicornException(Exception):
 @app.get("/favicon.ico")
 def icon():
     return "https://media.discordapp.net/attachments/1036704934432886876/1037321689073188894/cropped-it-logo.png"
-
-@app.exception_handler(404)
-def handler_error(req, exc):
-    return Response("err")
 
 uvicorn.run(app, host=config["host"], port=int(config["port"]))

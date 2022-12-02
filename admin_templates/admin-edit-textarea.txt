@@ -8,56 +8,18 @@
           name="pathFile"
           value="/*filePath*/"
           readonly
-          style="padding: 1px; width: 100%"
         />
       </h2>
 
-      <textarea id="edit-box" class="edit-box form-control" name="textFile">
-/*textFile*/
-        </textarea
-      >
+      <textarea id="edit-box" class="edit-box form-control" name="textFile">/*textFile*/</textarea>
       <script>
-        const editor = SUNEDITOR.create(document.getElementById("edit-box"), {
-          lang: SUNEDITOR_LANG["en"],
-          width: "100%",
-          height: "fit-content",
-          minHeight: "300px",
-          buttonList: [
-            ["undo", "redo"],
-            ["font", "fontSize", "formatBlock"],
-            ["paragraphStyle", "blockquote"],
-            [
-              "bold",
-              "underline",
-              "italic",
-              "strike",
-              "subscript",
-              "superscript",
-            ],
-            ["fontColor", "hiliteColor", "textStyle"],
-            ["removeFormat"],
-            ["outdent", "indent"],
-            ["align", "horizontalRule", "list", "lineHeight"],
-            ["table", "link", "image", "video"],
-            //['fullScreen', 'showBlocks', 'codeView'],
-            ["preview", "print", "codeView"],
-            ["save"],
-            "/",
-          ],
-        });
-        editor.onInput = () => {
-          editor.save();
-        };
-        editor.onChange = () => {
-          editor.save();
-        };
+
       </script>
       <br />
       <input
         type="submit"
-        onclick="editor.save();"
         value="save as template file"
-        class="btn btn-success"
+        class="btn btn-success "
       />
       <br /><br />
     </form>

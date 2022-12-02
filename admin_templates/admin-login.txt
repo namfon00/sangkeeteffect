@@ -1,15 +1,32 @@
+<style>
+  .big-content > nav {
+    display: none !important;
+  }
+</style>
 <div class="ct-form">
   <div>
-    <div class="alert alert-primary" role="alert">
+    <div class="alert alert-primary animate__animated animate__bounce" role="alert">
       <h4 class="alert-heading">Where I Can Get Admin Token</h4>
       <p>Check In Terminal</p>
     </div>
-    <form method="post" >
-      <h1>Login</h1>
-      <label> Token </label>
-      <input class="form-control" name="adminToken" />
-      <br />
-      <input type="submit" value="Login" class="btn btn-primary" />
+    <center>
+    <form method="post" class="form-control" style="padding:60px;"  >
+      <div style="max-width: 600px;">
+        <h1 class="animate__animated animate__jackInTheBox" >Login</h1>
+        <hr/>
+        <label class="animate__animated animate__bounceIn" style="display: block;text-align: left;" >Token</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <span class="animate__animated animate__heartBeat material-symbols-outlined animate__hover">
+              vpn_key
+              </span>
+          </span>
+          <input class="form-control" name="adminToken" />
+        </div>
+        <br />
+        <input type="submit" style="width:100%" value="Login" class="btn btn-info animate__animated animate__rubberBand animate__hover" />
+      </div>
     </form>
+    </center>
   </div>
 </div>

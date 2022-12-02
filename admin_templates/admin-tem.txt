@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       rel="icon"
-      href="https://media.discordapp.net/attachments/1036704934432886876/1037321689073188894/cropped-it-logo.png"
+      href="https://media.discordapp.net/attachments/1036704934432886876/1037745102967275621/music-1.png"
     />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -20,7 +21,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.discordapp.com/attachments/1037321420935532567/1043093506710847549/GitHub_Mona-Sans_And_Hubot-Sans_Fonts.css"
+      href="https://cdn.discordapp.com/attachments/1036704883056848917/1045342231839653899/animation.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
@@ -33,8 +34,19 @@
     <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044601124960870460/suneditor.min.js"></script>
     <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044602209280725023/en.js"></script>
     <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044620299292905502/sweetalert2.all.min.js"></script>
+    <!-- https://github.com/codemirror/CodeMirror -->
+    <!-- codeMirror (^5.0.0) -->
+    <!-- Use version 5.x.x -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap");
+      :root{
+        --ani-count: 1;
+      }
       * {
         font-family: "Noto Sans Thai", sans-serif;
       }
@@ -69,18 +81,21 @@
         padding: 20px;
         min-width: fit-content;
         width: 25vw;
-        border-right: solid 1px var(--bs-gray-300);
+        border-right: solid 1px var(--bs-gray-400);
       }
       .navbar {
         padding: 10px;
-        border-bottom: solid 1px var(--bs-gray-300);
+        border-bottom: solid 1px var(--bs-gray-400);
       }
-
+      .nav-link:hover{
+        background:var(--bs-gray-400);
+      }
       .ct-form {
         overflow-y: scroll;
         width: 100%;
         padding: 20px;
         max-height: 90%;
+        background: #e8e9e9;
       }
       .ct-form > div {
         min-height: fit-content;
@@ -113,6 +128,7 @@
         width: 100%;
         height: 100%;
       }
+      
     </style>
     <script>
       const Toast = Swal.mixin({
@@ -142,20 +158,66 @@
       <nav
         class="nav flex-column bg-dark bg-opacity-10 d-none d-sm-none d-md-block"
       >
-        <a class="nav-link" href="/admin/">Home</a>
-        <a class="nav-link" href="/admin/config">Config</a>
-        <a class="nav-link" href="/admin/edit">Edit</a>
-        <a class="nav-link" href="/docs">Fastapi Docs</a>
-        <a class="nav-link" href="/redoc">Fastapi NewDocs</a>
-        <a class="nav-link" href="/admin/about">About</a>
+        <a class="nav-link" href="/admin">
+          <span class="material-symbols-outlined">
+          home
+          </span>
+          Home
+        </a>
+        <a class="nav-link" href="/admin/config">
+          <span class="material-symbols-outlined">
+            settings
+          </span>
+          Config
+        </a>
+        <a class="nav-link" href="/admin/edit">
+          <span class="material-symbols-outlined">
+            edit
+          </span>
+          Edit
+        </a>
+        <a class="nav-link" href="/docs">
+          <span class="material-symbols-outlined">
+            description
+          </span>
+          Fastapi Docs
+        </a>
+        <a class="nav-link" href="/redoc">
+          <span class="material-symbols-outlined">
+            description
+          </span>
+          Fastapi NewDocs
+        </a>
+        <a class="nav-link" href="https://github.com/namfon00/sangkeeteffect/blob/main/README.md">
+          <span class="material-symbols-outlined">
+            description
+          </span>
+          Documents
+        </a>
       </nav>
       /*content*/
-    </section>
+    </section>      
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <script>
+      const ani_hover = document.getElementsByClassName("animate__hover")
+      for(let i=0;i<=ani_hover.length;i++){
+        ani_hover[i].addEventListener("mouseover",(e,elem = ani_hover[i])=>{
+          elem.classList.remove("animate__animated")
+          elem.classList.remove("animate__rubberBand")
+          elem.classList.remove("animate__heartBeat")
+          setTimeout(()=>{
+          elem.classList.add("animate__animated")
+          elem.classList.add("animate__rubberBand")
+          },1)
+        })
+        
+      }
+    </script>
     /*alert*/
   </body>
 </html>
