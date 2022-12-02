@@ -1,0 +1,9 @@
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    <span style="font-size:2rem;" class="material-symbols-outlined">
+    link
+    </span>
+    Ngrok Link
+  </h4>
+  <p>/*ngrokLink*/</p>
+</div>

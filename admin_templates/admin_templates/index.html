@@ -5,10 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      rel="icon"
-      href="https://media.discordapp.net/attachments/1036704934432886876/1037321689073188894/cropped-it-logo.png"
-    />
-    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
@@ -26,13 +22,7 @@
       href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://cdn.discordapp.com/attachments/1036704883056848917/1044601705104412682/suneditor.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044601124960870460/suneditor.min.js"></script>
-    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044602209280725023/en.js"></script>
-    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044620299292905502/sweetalert2.all.min.js"></script>
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap");
       * {
@@ -71,6 +61,7 @@
         width: 25vw;
         border-right: solid 1px var(--bs-gray-300);
       }
+
       .navbar {
         padding: 10px;
         border-bottom: solid 1px var(--bs-gray-300);
@@ -80,11 +71,11 @@
         overflow-y: scroll;
         width: 100%;
         padding: 20px;
-        max-height: 90%;
+        max-height: 100%;
       }
       .ct-form > div {
         min-height: fit-content;
-        margin-bottom: 10vh;
+        margin-bottom: 50vh;
       }
       table {
         width: 100%;
@@ -114,19 +105,6 @@
         height: 100%;
       }
     </style>
-    <script>
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      });
-    </script>
     <title>Khun Sangkeet Admin Controls</title>
   </head>
   <body>
@@ -139,9 +117,7 @@
       </a>
     </nav>
     <section class="big-content">
-      <nav
-        class="nav flex-column bg-dark bg-opacity-10 d-none d-sm-none d-md-block"
-      >
+      <nav class="nav flex-column bg-dark bg-opacity-10">
         <a class="nav-link" href="/admin/">Home</a>
         <a class="nav-link" href="/admin/config">Config</a>
         <a class="nav-link" href="/admin/edit">Edit</a>
@@ -149,13 +125,67 @@
         <a class="nav-link" href="/redoc">Fastapi NewDocs</a>
         <a class="nav-link" href="/admin/about">About</a>
       </nav>
-      /*content*/
+      <form class="ct-form">
+        <h2 class="alert alert-warning">
+          Sound Id
+          <input
+            readonly
+            style="width: 100%"
+            class="alert alert-warning"
+            value="2bhk123h12"
+          />
+        </h2>
+        <div class="form-control">
+          <h2>Edit</h2>
+          <style>
+            img {
+              border: solid 1px var(--bs-gray-500);
+            }
+            tr:last-child {
+              text-align: right;
+            }
+            td:nth-child(1) {
+              width: 10vh;
+            }
+          </style>
+          <table>
+            <tr>
+              <td>
+                <img
+                  src="../image/istockphoto-1175435360-612x612.jpeg"
+                  width="150px"
+                />
+                <br />
+                <label>cover.pnh</label>
+                <br />
+                <audio
+                  controls
+                  src="../data/sound/3789N9ayU4W3GXca07c.mp3"
+                ></audio>
+                <br />
+                <label> 3789N9ayU4W3GXca07c.mp3 </label>
+              </td>
+              <td>
+                <label>Sound Name</label>
+                <input class="form-control" />
+                <label>Description</label>
+                <textarea class="form-control"> </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <input type="submit" class="btn btn-success" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
     </section>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
-    /*alert*/
   </body>
 </html>

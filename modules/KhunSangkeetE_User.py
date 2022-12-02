@@ -9,6 +9,7 @@ app = None
 config = None
 parent_path = None
 render_templates = None
+redirect = None
 
 def userSys():
     global app
@@ -29,6 +30,8 @@ def userSys():
     def show_info_sound():
         return "Inprogress"
 
-    @app.get("/favicon.ico")
-    def display_icon_web():
-        return FileResponse("D:/KMITL-Git-Pj/sangkeeteffect-b-version/image/fastapi-icon.png")
+    @app.get("/stream/sound/{id}")
+    def stream_sound(id: str = ""):
+        # Use in both admin and user
+        return FileResponse(parent_path+config["local_storage"]["sound path"]+"/"+id+".mp3")
+
