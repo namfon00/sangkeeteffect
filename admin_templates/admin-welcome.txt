@@ -55,7 +55,7 @@
     <br/><br/>
 
     <div class="form-control">
-      <h2>Sponsor</h2>
+      <h2>Contributors</h2>
       <a class="list-admin-content" href="https://github.com/namfon00">
         <span class="material-symbols-outlined">
         person

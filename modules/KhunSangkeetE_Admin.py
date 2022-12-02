@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, Cookie
-from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse, Response, PlainTextResponse
+from fastapi.responses import HTMLResponse, Response
 from pyngrok import ngrok as ngrokModule
 import json
 import os
@@ -38,25 +38,25 @@ def adminSys():
             + err (เมื่อโทเค็นผิด)
         + Output
             + หน้า Login
-            + หน้า Wellcome
+            + หน้า welcome
             + Cookie (For Token)
         """
-        admin_html = open(adminTemPath, "r").read()
+        admin_html = open(adminTemPath, "r", encoding="utf-8").read()
         index_html = open(cur_path_of_py_file +
-                        "/admin_templates/admin-login.txt", "r").read()
+                        "/admin_templates/admin-login.txt", "r", encoding="utf-8").read()
         if adminToken == radminToken:
-            wellcome_html = open(cur_path_of_py_file +
-                                "/admin_templates/admin-wellcome.txt", "r").read()
+            welcome_html = open(cur_path_of_py_file +
+                                "/admin_templates/admin-welcome.txt", "r", encoding="utf-8").read()
             if ngrokLink != "":
-                wellcome_html = render_templates(wellcome_html, {"ngrokLinkBox": render_templates(open(cur_path_of_py_file+"/admin_templates/admin-wellcome-showNgrokLink.txt",
-                                                                                                    "r").read(), {"ngrokLink": ngrokLink})})
+                welcome_html = render_templates(welcome_html, {"ngrokLinkBox": render_templates(open(cur_path_of_py_file+"/admin_templates/admin-welcome-showNgrokLink.txt",
+                                                                                                    "r", encoding="utf-8").read(), {"ngrokLink": ngrokLink})})
             else:
-                wellcome_html = render_templates(
-                    wellcome_html, {"ngrokLinkBox": ""})
-            return HTMLResponse(render_templates(admin_html, {"content": wellcome_html}))
+                welcome_html = render_templates(
+                    welcome_html, {"ngrokLinkBox": ""})
+            return HTMLResponse(render_templates(admin_html, {"content": welcome_html}))
         if err != "":
             index_html = render_templates(index_html, {"err": open(
-                cur_path_of_py_file+"/admin_templates/admin-login-wrongToken.txt", "r").read()})
+                cur_path_of_py_file+"/admin_templates/admin-login-wrongToken.txt", "r", encoding="utf-8").read()})
         else:
             index_html = render_templates(index_html, {"err": ""})
         return HTMLResponse(render_templates(admin_html, {"content": index_html}))
@@ -104,9 +104,9 @@ def adminSys():
         """
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
-        admin_html = open(adminTemPath, "r").read()
+        admin_html = open(adminTemPath, "r", encoding="utf-8").read()
         index_html = open(cur_path_of_py_file +
-                        "/admin_templates/admin-config.txt", "r").read()
+                        "/admin_templates/admin-config.txt", "r", encoding="utf-8").read()
         data_cf = {
             "port": config["port"],
             "path": config["parent path"],
@@ -118,7 +118,6 @@ def adminSys():
             "gFormLink": config["with_gform_and_gsheet"]["form_link"],
             "sheetLink": config["with_gform_and_gsheet"]["sheet_link"],
             "sheetLinkCSV": config["with_gform_and_gsheet"]["csv_link"],
-            "ngrokDes": "สำหรับแชร์ Localhost",
             "ngrokLink": ngrokLink,
             "ngrokCheck": "checked" if config["ngrok"]["on"] else "",
             "ngrokToken": config["ngrok"]["token"]
@@ -198,16 +197,16 @@ def adminSys():
         + Output
             + รายการไฟล์ต่างๆ
         """
-        admin_html = open(adminTemPath, "r").read()
+        admin_html = open(adminTemPath, "r", encoding="utf-8").read()
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
         if filepath != "":
             if "admin-" in filepath:
                 return HTMLResponse(render_templates(admin_html, {"content":"Admin File Can't Edit Here"}))
             return HTMLResponse(render_templates(admin_html, {"content":
-            render_templates(open(cur_path_of_py_file+"/admin_templates/admin-edit-textarea.txt", "r").read()
+            render_templates(open(cur_path_of_py_file+"/admin_templates/admin-edit-textarea.txt", "r", encoding="utf-8").read()
                 , { "filePath":filepath,
-                    "textFile":open(parent_path+"/"+filepath, "r").read()
+                    "textFile":open(parent_path+"/"+filepath, "r", encoding="utf-8").read()
                     })})
             )
         ct = ""
@@ -217,7 +216,7 @@ def adminSys():
             '''<span class="material-symbols-outlined">draft</span>'''}
             <a href='?filepath={"templates/"+file_name}'>{file_name}</a>
             </td></tr>\n"""
-        ct = render_templates(open(cur_path_of_py_file+"/admin_templates/admin-edit.txt", "r").read(),
+        ct = render_templates(open(cur_path_of_py_file+"/admin_templates/admin-edit.txt", "r", encoding="utf-8").read(),
                             {"templateFiles": ct})
         if config["with_gform_and_gsheet"]["on"]:
             ct = render_templates(ct, {"soundData": f"""
@@ -241,4 +240,8 @@ def adminSys():
         file_ = open(parent_path+"/"+pathFile, "w")
         file_.write(textFile)
         file_.close()
-        return "Success"
+        return HTMLResponse("""
+        <script>
+            window.location.href = "./edit"
+        </script>
+        """)
