@@ -4,7 +4,8 @@
       <h4 class="alert-heading">Where I Can Get Admin Token</h4>
       <p>Check In Terminal</p>
     </div>
-    <form method="post" class="bg-light">
+    /*err*/
+    <form method="post" >
       <h1>Login</h1>
       <label> Token </label>
       <input class="form-control" name="adminToken" />

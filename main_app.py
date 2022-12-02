@@ -1,137 +1,69 @@
-from fastapi import FastAPI, Request, Form, Cookie, Response
-from fastapi.responses import HTMLResponse, RedirectResponse
-from pyngrok import ngrok as ngrokModule
+from fastapi import FastAPI
 import uvicorn
 import json
+import os
 import random
-import time
+from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
 
-app = FastAPI()
-#หาpathปัจจุบันของโปรเจค
-if __file__.find("\\") != -1:
-    cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
-else:
-    cur_path_of_py_file =  __file__[:__file__.rfind("/")]
-#อ่านไฟล์ config
-config = json.loads(open(cur_path_of_py_file+"/data/config.json").read())
-
-tem_path = config["parent path"] if config["parent path"] != "./" else cur_path_of_py_file
-ngrok = bool(config["ngrok"]["on"])
-ngrokLink = ""
-
-
-def setNgrok():
-    global ngrokLink
-    if bool(config["ngrok"]["on"]) and config["ngrok"]["token"] != "":
-        ngrokModule.set_auth_token(config["ngrok"]["token"])
-        ngrokLink = "<tr><th>%s</th></tr>"%ngrokModule.connect(config["port"])
-        print(ngrokLink)
-    else:
-        ngrokLink = ""
-        ngrokModule.kill()
-def render_templates(index_html, data):
-    for i in data:
-        index_html = index_html.replace(f"/*{i}*/",str(data[i]))
-    return index_html
-
+def setConfigFile():
+        global cur_path_of_py_file
+        open(cur_path_of_py_file+"/data/config.json", "w").write("""{"port": "80", "parent path": "./", "template": {"home": "/templates/home.txt"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}}""")
+        print("set-cf")
 def genAdminToken():
     adminToken = ""
     for i in range(20):
-        adminToken += str(random.randrange(0,10))
-    return adminToken
-radminToken = genAdminToken()
-setNgrok()
-
-@app.get("/")
-def home():
-    index_html = open(tem_path+config["template"]["home"]).read()
-    return HTMLResponse(index_html.replace("/*text*/","Hello"))
-@app.get("/uploadsound")
-def uploadsound():
-    index_html = open(tem_path+"/templates/uploadsound.html").read()
-    return HTMLResponse(index_html)
-@app.get("/search")
-def search(keyword:str):
-    index_html = open(tem_path+config["template"]["home"]).read()
-    return HTMLResponse(index_html.replace("/*text*/",keyword))
-
-@app.get("/admin")
-def admin():
-    admin_html = open(cur_path_of_py_file+"/templates/admin-tem.txt").read()
-    index_html = open(cur_path_of_py_file+"/templates/admin-login.txt").read()
-    print(radminToken)
-    return HTMLResponse(render_templates(admin_html, {"content":index_html}))
-
-@app.post("/admin")
-def admin_login(response:Response,adminToken:str = Form("")):
+        adminToken += str(random.randrange(0, 10))
     print(adminToken)
-    if adminToken == radminToken:
-        response.set_cookie(key="adminToken",value=adminToken)
-        return "สำเร็จ"
-    response.delete_cookie(key="adminToken")
-    return "Tokenผิดพลาด"
+    return adminToken
+def render_templates(index_html:str, data:dict):
+        for i in data:
+            index_html = index_html.replace(f"/*{i}*/", str(data[i]))
+        return index_html
+
+app = FastAPI()
+KhunSangkeetE_Admin.app = app
+
+if __file__.find("\\") != -1:
+    cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
+else:
+    cur_path_of_py_file = __file__[:__file__.rfind("/")]
+
+config = ""
+try:
+    config = json.loads(
+        open(cur_path_of_py_file+"/data/config.json", "r").read())
+    if config == "":
+        setConfigFile()
+        config = json.loads(
+            open(cur_path_of_py_file+"/data/config.json", "r").read())
+except:
+    setConfigFile()
+    config = json.loads(
+        open(cur_path_of_py_file+"/data/config.json", "r").read())
+parent_path = config["parent path"] if config["parent path"] != "./" else cur_path_of_py_file
+
+KhunSangkeetE_Admin.cur_path_of_py_file = cur_path_of_py_file
+KhunSangkeetE_Admin.config = config
+KhunSangkeetE_Admin.adminTemPath = cur_path_of_py_file+"/admin_templates/admin-tem.txt"
+KhunSangkeetE_Admin.admin_redirect = """
+                                    <script>
+                                        window.location.href = "/admin"
+                                    </script>
+                                    """
 
 
-@app.get("/admin/config")
-def config_html(adminToken  = Cookie(None,alias="adminToken")):
-    if adminToken != radminToken:
-        return HTMLResponse(
-        """
-        <script>
-            window.location.href = "/admin"
-        </script>
-        """
-        )
-    admin_html = open(cur_path_of_py_file+"/templates/admin-tem.txt").read()
-    index_html = open(cur_path_of_py_file+"/templates/admin-config.txt").read()
-    data_cf = {
-        "port":config["port"],
-        "path":config["parent path"],
-        "home":config["template"]["home"],
-        "withGsheetCheck":"checked" if config["with_gform_and_gsheet"]["on"] else "",
-        "gFormLink":config["with_gform_and_gsheet"]["form_link"],
-        "sheetLink":config["with_gform_and_gsheet"]["sheet_link"],
-        "sheetLinkCSV":config["with_gform_and_gsheet"]["csv_link"],
-        "ngrokDes":"สำหรับแชร์ Localhost",
-        "ngrokLink":ngrokLink,
-        "ngrokCheck": "checked" if config["ngrok"]["on"] else "",
-        "ngrokToken":config["ngrok"]["token"]
-    }
-    index_html = render_templates(admin_html, {"content":render_templates(index_html, data_cf)})
-    return HTMLResponse(index_html)
+KhunSangkeetE_Admin.ngrok = bool(config["ngrok"]["on"])
+KhunSangkeetE_Admin.parent_path = parent_path
+KhunSangkeetE_Admin.radminToken = "1212312121"
+KhunSangkeetE_Admin.render_templates = render_templates
+KhunSangkeetE_Admin.adminSys()
+app = KhunSangkeetE_Admin.app
 
-@app.post("/admin/config")
-def set_config(
-        path:str = Form(""),
-        home:str = Form(""),
-        storageType:str = Form(""), sheetLink:str  = Form(""), sheetLinkCSV:str = Form(""),
-        gFormLink:str = Form(""),
-        ngrok:bool = Form(""), ngrokToken:str = Form("")):
-    global config, ngrokLink
-    #config หลัก
-    config_js = open(cur_path_of_py_file+"/data/config.json","w")
-    config["parent path"] = path
-    config["template"]["home"] = home
-    #config ประเภทที่เก็บข้อมูล
-    if storageType == "local":
-        config["with_gform_and_gsheet"]["on"] = 0
-    else:
-        config["with_gform_and_gsheet"]["on"] = 1
-    #config ngrok
-    if ngrok:
-        config["ngrok"]["on"] = 1
-        config["ngrok"]["token"] = ngrokToken
-        setNgrok()
-    else:
-        config["ngrok"]["on"] = 0
-        config["ngrok"]["token"] = ""
-        setNgrok()
-    config_js.write(json.dumps(config))
-    config_js.close()
-    return HTMLResponse("""
-    <script>
-        window.location.href = "./config"
-    </script>
-    """)
-    
-uvicorn.run(app)
+KhunSangkeetE_User.app = app
+KhunSangkeetE_User.config = config
+KhunSangkeetE_User.parent_path = parent_path
+KhunSangkeetE_User.render_templates = render_templates
+KhunSangkeetE_User.userSys()
+app = KhunSangkeetE_User.app
+
+uvicorn.run(app, host=config["host"], port=int(config["port"]))

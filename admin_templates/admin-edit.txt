@@ -1,0 +1,36 @@
+<div class='ct-form'>
+    <style>
+        tr{
+            border-bottom:solid 1px var(--bs-gray-300)
+        }
+    </style>
+    <div>
+    <h1>
+        <span class="material-symbols-outlined">
+        edit_square
+        </span>
+        Edit File/Data
+    </h1>
+    <div class="form-control ct-edit">
+        <h2>
+            <span class="material-symbols-outlined">
+            folder
+            </span>
+            Templates
+        </h2>
+        <table>
+        /*templateFiles*/
+        </table>
+    </div>
+    <br/>
+    <div class="form-control ct-edit">
+        <h2>
+            <span class="material-symbols-outlined">
+            database
+            </span>
+            Sound
+        </h2>
+        /*soundData*/
+    </div>
+    </div>
+<div>

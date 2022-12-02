@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap'); 
+      *{
+        font-family: 'Noto Sans Thai', sans-serif;
+      }
+      body {
+        overflow: hidden;
+        height: 100vh;
+      }
+      span{
+        display:inline-block;
+        vertical-align: text-top;
+      }
+      h1>span.material-symbols-outlined, h2>span.material-symbols-outlined,
+      h4>span.material-symbols-outlined{
+        font-size:2.5rem;
+      }
+      
+      .big-content {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      .big-content>nav {
+        padding: 20px;
+        min-width: fit-content;
+        width: 25vw;
+        border-right: solid 1px var(--bs-gray-300);
+      }
+
+      .navbar {
+        padding: 10px;
+        border-bottom: solid 1px var(--bs-gray-300);
+      }
+
+      .ct-form {
+        overflow-y: scroll;
+        width: 100%;
+        padding: 20px;
+        max-height: 100%;
+      }
+      .ct-form>div{
+        min-height:fit-content;
+        margin-bottom:50vh;
+      }
+      table {
+        width: 100%;
+      }
+      
+      tr,
+      td {
+        vertical-align: top;
+        padding: 10px;
+      }
+      .list-admin-content, .nav-bar-content{
+        color : var(--bs-gray-800);
+        text-decoration : none;
+      }
+      .list-admin-content{
+        display:block;
+        padding-top:15px;
+      }
+      .ct-edit{
+        height:fit-content;
+        max-height: 600px;
+        overflow-Y:scroll;
+      }
+      .edit-box{
+        width:100%;
+        height:100%;
+      }
+    </style>
+    <title>Khun Sangkeet Admin Controls</title>
+  </head>
+  <body>
+    <nav class="navbar bg-dark bg-gradient bg-opacity-10">
+    <a href="/admin" class="nav-bar-content">
+      <h1>Khun Sangkeet E-Admin</h1>
+    </a>
+    <a href="/admin/logout" class="nav-bar-content">
+      <span class="material-symbols-outlined">
+        logout
+      </span>
+    </a>
+    </nav>
+    <section class="big-content">
+    <nav class="nav flex-column bg-dark bg-opacity-10">
+        <a class="nav-link" href="/admin/">Home</a>
+        <a class="nav-link" href="/admin/config">Config</a>
+        <a class="nav-link" href="/admin/edit">Edit</a>
+        <a class="nav-link" href="/docs">Fastapi Docs</a>
+        <a class="nav-link" href="/redoc">Fastapi NewDocs</a>
+        <a class="nav-link" href="/admin/about">About</a>
+    </nav>
+      /*content*/
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>

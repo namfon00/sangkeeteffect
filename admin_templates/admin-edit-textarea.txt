@@ -1,0 +1,14 @@
+<div class="ct-form">
+    <div class="edit-box">
+    <form method="post" class="edit-box">
+        <h2 class="alert alert-warning">
+            Edit : <input class="alert alert-warning" name="pathFile" value="/*filePath*/" readonly style="padding:1px;width:100%;" />
+        </h2>
+        
+        <textarea class="edit-box form-control" name="textFile">/*textFile*/
+        </textarea>
+        <br/>
+        <input type="submit" value="save" class="btn btn-success" />
+    </form>
+    <div>
+</div>
