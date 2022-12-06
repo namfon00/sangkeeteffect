@@ -1,0 +1,19 @@
+<tr>
+    <td>/*id*/</td>
+    <td>/*name*/</td>
+    <td><a href="/*soundFile*/" >Link</a></td>
+    <td>/*des*/</td>
+    <td>
+        <a class="btn btn-warning" href="/*editLink*/" >
+            <span class="material-symbols-outlined">
+            border_color
+            </span>
+        </a>
+    </td>
+    <td>
+        <button class="btn btn-danger" onclick="confirmDelete('/*id*/')">
+            <span class="material-symbols-outlined">
+                delete_forever
+            </button>
+    </td>
+</tr>

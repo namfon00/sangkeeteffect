@@ -1,0 +1,30 @@
+<div class="ct-form">
+  <div class="edit-box">
+    <form method="post" class="edit-box">
+      <h2 class="alert alert-warning">
+        Edit : /*filePath*/
+      </h2>
+        <input
+          class="alert alert-warning"
+          name="pathFile"
+          value="/*filePath*/"
+          readonly
+          type = "hidden"
+        />
+      
+
+      <textarea  id="edit-ctn" class="edit-box form-control" name="textFile">/*textFile*/</textarea>
+      <script>
+
+      </script>
+      <br />
+      <input
+        type="submit"
+        value="save as template file"
+        class="btn btn-success "
+        type="submit" onclick="setTimeout(show_saving(),500)"
+      />
+      <br /><br /><br />
+    </form>
+  </div>
+</div>

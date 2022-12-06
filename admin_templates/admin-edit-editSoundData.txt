@@ -1,0 +1,82 @@
+<div class="ct-form">
+    <div class="form-control">
+        <h2 class="alert alert-warning">
+            Sound Id : /*id*/
+        </h2>
+        <form method="post">
+            <table>
+                <tr>
+                    <th>Cover (view only)</th>
+                    <th>Sound File (view only)</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="https://media.discordapp.net/attachments/1036704934432886876/1037745102967275621/music-1.png"
+                         width="100px" />
+                         <br/>
+                         <p>Cover.png</p>
+                    </td>
+                    <td>
+                        <audio controls src="/stream/sound//*id*/" ></audio>
+                    </td>
+                </tr>
+            </table>
+                <label>Sound Name</label>
+                <input name="soundName" value="/*soundName*/" class="form-control" />
+                <br/>
+                <label>Description</label>
+                <textarea name="soundDescription" id="edit-box">/*description*/</textarea>
+                <script>
+                    const editor = SUNEDITOR.create(document.getElementById("edit-box"), {
+                      lang: SUNEDITOR_LANG["th"],
+                      width: "100%",
+                      height: "fit-content",
+                      minHeight: "300px",
+                      codeMirror: CodeMirror,
+                      font: [
+                        "Arial",
+                        "Verdana",
+                        "Tahoma",
+                        "Trebuchet MS",
+                        "Times New Roman",
+                        "Georgia",
+                        "Garamond",
+                        "Courier New",
+                        "Brush Script MT",
+                        "Noto Sans Thai",
+                        "Prompt",
+                        "Sarabun"
+                      ],
+                      buttonList: [
+                        ["undo", "redo"],
+                        ["font", "fontSize", "formatBlock"],
+                        [
+                          "bold",
+                          "underline",
+                          "italic",
+                          "strike",
+                          "subscript",
+                          "superscript",
+                        ],
+                        ["fontColor", "hiliteColor", "textStyle"],
+                        ["removeFormat"],
+                        ["outdent", "indent"],
+                        ["align", "horizontalRule", "list", "lineHeight"],
+                        ['fullScreen', 'showBlocks', 'codeView'],
+                        ['preview', 'print'],
+                        ["save"],
+                        "/",
+                      ],
+                    });
+                    editor.onInput = () => {
+                      editor.save();
+                    };
+                    editor.onChange = () => {
+                      editor.save();
+                    };
+                  </script>
+            <br/>
+            <input onclick="editor.save();setTimeout(show_saving(),500);" style="text-align: right;" type="submit" class="btn btn-success "  />
+        </form>
+    </div>
+</div>

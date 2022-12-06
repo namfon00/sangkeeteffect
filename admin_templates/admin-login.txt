@@ -1,0 +1,61 @@
+<style>
+  .big-content > nav {
+    display: none !important;
+  }
+  .swal2-html-container{
+    overflow-Y : hidden;
+  }
+</style>
+<div class="ct-form">
+  <div>
+    <div class="alert alert-primary animate__animated animate__bounce" role="alert">
+      <h4 class="alert-heading">Where I Can Get Admin Token</h4>
+      <p>Check In Terminal</p>
+    </div>
+    <center>
+    <form method="post" class="form-control" style="padding:60px;"  >
+      <div style="max-width: 600px;">
+        <h1 class="animate__animated animate__jackInTheBox" >Login</h1>
+        <hr/>
+        <label class="animate__animated animate__bounceIn" style="display: block;text-align: left;" >Token <font color="#f14668">*</font></label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <span class="animate__animated animate__heartBeat material-symbols-outlined animate__hover"
+            onclick="Swal.fire('กดทำไม','','question')">
+              vpn_key
+              </span>
+          </span>
+          <input class="form-control" name="adminToken" required />
+        </div>
+        <br />
+        <input type="submit" style="width:100%" value="Login" class="btn btn-info animate__animated animate__rubberBand animate__hover" />
+      </div>
+    </form>
+    </center>
+  </div>
+</div>
+
+<script>
+  document.body.addEventListener("submit", (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "You are not robot?",
+      html: '<center><div id="recaptcha"></div></center>',
+      didOpen: () => {
+        grecaptcha.render("recaptcha", {
+          sitekey: "6LfltzkjAAAAAIDo_3XNXKyGegOYQo6MyI3_4e3V",
+        });
+      },
+      preConfirm: function () {
+        if (grecaptcha.getResponse().length === 0) {
+          Swal.showValidationMessage(`Please verify that you're not a robot`);
+          e.preventDefault();
+        }
+      },
+    }).then((result) => {
+      if (grecaptcha.getResponse().length !== 0) {
+        document.forms[0].submit("");
+      }
+    });
+  });
+</script>
