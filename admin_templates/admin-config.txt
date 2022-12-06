@@ -16,9 +16,9 @@
         <span class="material-symbols-outlined"> warning </span>
         Danger!!
       </h4>
-      <p>Change port must change in config.json!!</p>
+      <p>เปลี่ยนPortและPathได้ที่ใน config.json!!</p>
       <hr />
-      <p class="mb-0">Change Parent path must restart runtime</p>
+      <p class="mb-0">โปรดตวรจสอบให้แน่ใจPortหรือPathที่เปลี่ยนสามารถใช้การได้</p>
     </div>
     <form method="post" class="form-control">
       <h1>
@@ -46,7 +46,7 @@
             <label>Parent path</label>
           </td>
           <td>
-            <input name="path" class="form-control" value="/*path*/" />
+            <input name="path" class="form-control" readonly style="background-color: #e9ecef; opacity: 1;" value="/*path*/" />
           </td>
         </tr>
         <tr class="config-header">
@@ -199,6 +199,7 @@
             <input
               class="form-control"
               name="ngrokToken"
+              type="password"
               value="/*ngrokToken*/"
             />
           </td>
@@ -222,7 +223,7 @@
       Swal.fire({
         icon: "error",
         title: "Not Available",
-        text: "This Function Not Available On Mac OS!!",
+        text: "This Function Not Available On Mac OS!! ฟังก์ชั่นนี้ไม่สามารถทำงานได้ในระบบMac OSได้",
         showConfirmButton: false,
         timer: 5000,
         timerProgressBar: true

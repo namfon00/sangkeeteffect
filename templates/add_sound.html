@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link
+      href="https://cdn.discordapp.com/attachments/1036704883056848917/1044601705104412682/suneditor.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044601124960870460/suneditor.min.js"></script>
+    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1044602209280725023/en.js"></script>
+    <script src="https://cdn.discordapp.com/attachments/1036704903613132950/1048524749845823518/th.js"></script>
+    <!-- https://github.com/codemirror/CodeMirror -->
+    <!-- codeMirror (^5.0.0) -->
+    <!-- Use version 5.x.x -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
+    <style>
+      html{
+        background: linear-gradient(125deg,
+        rgb(243, 154, 154),
+        rgb(255, 238, 141),
+        rgb(179, 234, 153),
+        rgb(146, 222, 237),
+        rgb(141, 164, 240),
+        rgb(172, 132, 218));
+      }
+      form{
+        background-color: #fff;
+        padding: 50px;
+      }
+    </style>
+</head>
+<body>
+    <form style="width:80vw;margin:10vw;" method="post" enctype="multipart/form-data" >
+        <h1 class="title is-1">Add Sound</h1>
+        <label hidden>Id</label>
+        <input name="_id" class="input" type="hidden" readonly value="/*id*/" required />
+        <label>Title<font color="#f14668">*</font></label>
+        <input class="input" name="soundName" required />
+        <label>File (.mp3 only)<font color="#f14668">*</font></label>
+        <input class="input" name="soundFile" type="file" accept=".mp3" required />
+        <label>Description<font color="#f14668">*</font></label>
+        <textarea id="edit-box" class="textarea" name="description" required></textarea>
+        <br/>
+        <input class="button is-primary" type="submit" />
+    </form>
+    <script>
+        const editor = SUNEDITOR.create(document.getElementById("edit-box"), {
+                      lang: SUNEDITOR_LANG["th"],
+                      width: "100%",
+                      height: "fit-content",
+                      minHeight: "300px",
+                      codeMirror: CodeMirror,
+                      font: [
+                        "Arial",
+                        "Verdana",
+                        "Tahoma",
+                        "Trebuchet MS",
+                        "Times New Roman",
+                        "Georgia",
+                        "Garamond",
+                        "Courier New",
+                        "Brush Script MT",
+                        "Noto Sans Thai",
+                        "Prompt",
+                        "Sarabun"
+                    ],
+                      buttonList: [
+                        ["undo", "redo"],
+                        ["font", "fontSize", "formatBlock"],
+                        [
+                          "bold",
+                          "underline",
+                          "italic",
+                          "strike",
+                          "subscript",
+                          "superscript",
+                        ],
+                        ["fontColor", "hiliteColor", "textStyle"],
+                        ["removeFormat"],
+                        ["outdent", "indent"],
+                        ["align", "horizontalRule", "list", "lineHeight"],
+                        ['fullScreen', 'showBlocks', 'codeView'],
+                        ['preview', 'print'],
+                        ["save"],
+                        "/",
+                      ],
+                    });
+                    editor.onInput = () => {
+                      editor.save();
+                    };
+                    editor.onChange = () => {
+                      editor.save();
+                    };
+    </script>
+</body>
+</html>

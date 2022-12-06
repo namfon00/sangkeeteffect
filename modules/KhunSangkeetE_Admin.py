@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Request, Form, Cookie
-from fastapi.responses import HTMLResponse, Response
+from fastapi import Form, Cookie
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
+from fastapi.openapi.utils import get_openapi
 from pyngrok import ngrok as ngrokModule
 import json
 import os
@@ -46,7 +48,7 @@ def adminSys():
         return result_html
 
     @app.get("/admin")
-    def admin(adminToken: str = Cookie(None)):
+    async def admin(adminToken: str = Cookie(None)):
         """
         หน้าแรกส่วนการตั้งค่า
         + Input
@@ -69,7 +71,7 @@ def adminSys():
 
 
     @app.post("/admin")
-    def admin_login(adminToken: str = Form("")):
+    async def admin_login(adminToken: str = Form("")):
         """
         ตรวจความถูกต้องของโทเค็น
         + Input
@@ -90,7 +92,7 @@ def adminSys():
         
 
     @app.get("/admin/logout")
-    def logout(adminToken = Cookie("")):
+    async def logout(adminToken = Cookie("")):
         """
         ออกจากระบบ
         + ทำการลบ Cookie
@@ -104,7 +106,7 @@ def adminSys():
 
 
     @app.get("/admin/config")
-    def config_html(adminToken=Cookie("")):
+    async def config_html(adminToken=Cookie("")):
         """
         หน้าการกำหนดค่า
         + Input
@@ -139,7 +141,7 @@ def adminSys():
 
 
     @app.post("/admin/config")
-    def set_config(
+    async def set_config(
             adminToken=Cookie(""),
             port: str = Form(config["port"]),
             path: str = Form(""),
@@ -205,7 +207,7 @@ def adminSys():
 
 
     @app.get("/admin/edit")
-    def showFileCanEdit(adminToken=Cookie("")):
+    async def showFileCanEdit(adminToken=Cookie("")):
         """
         หน้าแก้ไขไฟล์
         + Input
@@ -252,8 +254,16 @@ def adminSys():
         return HTMLResponse(index_html)
 
     @app.get("/admin/edit/template")
-    def edit_templates(adminToken=Cookie(""), filepath: str = ""):
-        """Inprogress"""
+    async def edit_templates(adminToken=Cookie(""), filepath: str = ""):
+        """
+        แดงหน้าแก้ไข้ Template
+        + Input
+            + adminToken
+            + filepath
+            + pathFile
+        + Output
+            + หน้าเว็บสำหรับแก้ไข้ Template
+        """
         global alert_mss
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
@@ -269,10 +279,11 @@ def adminSys():
         return redirect("/admin/edit")
 
     @app.post("/admin/edit/template")
-    def save_file_from_admin_edit(adminToken=Cookie(""), textFile:str=Form(""), pathFile=Form("")):
+    async def save_file_from_admin_edit(adminToken=Cookie(""), textFile:str=Form(""), pathFile=Form("")):
         """
-        บันทึกไฟล์ จากหน้าEdit
+        บันทึกไฟล์/ข้อมูล จากหน้าแก้ไข้ Template
         + Input
+            + adminToken
             + textFile
             + pathFile
         + Output
@@ -288,7 +299,16 @@ def adminSys():
         return HTMLResponse(redirect("/admin/edit"))
 
     @app.get("/admin/edit/sound_data/{id}")
-    def edit_soundData(adminToken=Cookie(""),id:str = ""):
+    async def edit_soundData(adminToken=Cookie(""),id:str = ""):
+        """
+        แดงหน้าแก้ไข้ข้อมูลเสียง
+        + Input
+            + adminToken
+            + filepath
+            + pathFile
+        + Output
+            + หน้าเว็บสำหรับแก้ไข้ข้อมูลเสียง
+        """
         global alert_mss
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
@@ -310,9 +330,19 @@ def adminSys():
                 )
 
     @app.post("/admin/edit/sound_data/{id}")
-    def save_soundData(adminToken=Cookie(""),id:str= "",
+    async def save_soundData(adminToken=Cookie(""),id:str= "",
     soundName:str = Form(""),
     soundDescription:str = Form("")):
+        """
+        บันทึกไฟล์/ข้อมูล จากหน้าแก้ไขข้อมูลเสียง
+        + Input
+            + adminToken
+            + id
+            + soundNeame
+            + soundDescription
+        + Output
+            + ไฟล์ / ข้อมูล ท่ีบันทึกแล้ว
+        """
         global alert_mss
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
@@ -329,7 +359,16 @@ def adminSys():
         return HTMLResponse(redirect("/admin/edit"))
     
     @app.get("/admin/edit/sound_data/delete/{id}")
-    def delete_soundData(adminToken=Cookie(""),id:str=""):
+    async def delete_soundData(adminToken=Cookie(""),id:str=""):
+        """
+        ลบไฟล์และข้อมูล จากหน้าแก้ไขข้อมูลเสียง
+        + Input
+            + adminToken
+            + id
+            + soundDescription
+        + Output
+            + ไฟล์ถูกลบ
+        """
         global alert_mss
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
@@ -346,3 +385,20 @@ def adminSys():
             os.remove(parent_path+config["local_storage"]["sound path"]+"/"+id+".mp3")
             alert_mss = "delete successfully ลบสำเร็จ"
         return HTMLResponse(redirect("/admin/edit"))
+
+    @app.get("/openapi.json")
+    async def protect_openapi(adminToken = Cookie("")):
+        if adminToken != radminToken:
+            return HTMLResponse(admin_redirect)
+        return JSONResponse(get_openapi(title=app.title, version=app.version, routes=app.routes))
+    @app.get("/docs")
+    async def protect_docs(adminToken = Cookie("")):
+        if adminToken != radminToken:
+            return HTMLResponse(admin_redirect)
+        return get_swagger_ui_html(openapi_url="/openapi.json", title="Swagger UI")
+    @app.get("/redoc")
+    async def protect_redocs(adminToken = Cookie("")):
+        if adminToken != radminToken:
+            return HTMLResponse(admin_redirect)
+        return get_redoc_html(openapi_url="/openapi.json", title="FastAPI - Redoc")
+

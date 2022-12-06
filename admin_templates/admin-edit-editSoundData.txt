@@ -29,11 +29,25 @@
                 <textarea name="soundDescription" id="edit-box">/*description*/</textarea>
                 <script>
                     const editor = SUNEDITOR.create(document.getElementById("edit-box"), {
-                      lang: SUNEDITOR_LANG["en"],
+                      lang: SUNEDITOR_LANG["th"],
                       width: "100%",
                       height: "fit-content",
                       minHeight: "300px",
                       codeMirror: CodeMirror,
+                      font: [
+                        "Arial",
+                        "Verdana",
+                        "Tahoma",
+                        "Trebuchet MS",
+                        "Times New Roman",
+                        "Georgia",
+                        "Garamond",
+                        "Courier New",
+                        "Brush Script MT",
+                        "Noto Sans Thai",
+                        "Prompt",
+                        "Sarabun"
+                      ],
                       buttonList: [
                         ["undo", "redo"],
                         ["font", "fontSize", "formatBlock"],
