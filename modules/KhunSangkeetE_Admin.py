@@ -150,6 +150,8 @@ def adminSys():
             info: str = Form(""),
             err404:str = Form(""),
             storageType: str = Form(""),
+            dataStorage: str = Form(""),
+            soundStorage: str = Form(""),
             sheetLink: str = Form(""),
             sheetLinkCSV: str = Form(""),
             gFormLink: str = Form(""),
@@ -187,6 +189,8 @@ def adminSys():
         else:
             config["with_gform_and_gsheet"]["on"] = 1
             config["local_storage"]["on"] = 0
+        config["local_storage"]["sound data"] = dataStorage
+        config["local_storage"]["sound path"] = soundStorage
         config["with_gform_and_gsheet"]["form_link"] = gFormLink
         config["with_gform_and_gsheet"]["sheet_link"] = sheetLink
         config["with_gform_and_gsheet"]["csv_link"] = sheetLinkCSV
@@ -234,22 +238,25 @@ def adminSys():
                 <iframe width="100%" height="100%" style="min-height: 500px;" src="{config["with_gform_and_gsheet"]["csv_link"][:config["with_gform_and_gsheet"]["csv_link"].find("&")]}" ></iframe>
             """})
         else:
-            data_sound = json.loads(open(parent_path+config["local_storage"]["sound data"], "r", encoding="utf-8").read())
-            data_sound_table = ""
-            for sound_id in data_sound:
-                data_sound_table += render_templates(
-                    path=cur_path_of_py_file+"/admin_templates/admin-edit-dataSoundRow.txt",
-                    data={
-                    "id":sound_id,
-                    "name":data_sound[sound_id]["name"],
-                    "des":data_sound[sound_id]["description"],
-                    "soundFile": f'/stream/sound/{sound_id}',
-                    "editLink": f"/admin/edit/sound_data/{sound_id}"
-                    })
-            data_sound_table = render_templates(
-                path=cur_path_of_py_file+"/admin_templates/admin-edit-dataSound.txt",
-                data={"soundDataRows": data_sound_table})
-            ct = render_templates(ct, {"soundData": data_sound_table})
+            try:
+                data_sound = json.loads(open(parent_path+config["local_storage"]["sound data"], "r", encoding="utf-8").read())
+                data_sound_table = ""
+                for sound_id in data_sound:
+                    data_sound_table += render_templates(
+                        path=cur_path_of_py_file+"/admin_templates/admin-edit-dataSoundRow.txt",
+                        data={
+                        "id":sound_id,
+                        "name":data_sound[sound_id]["name"],
+                        "des":data_sound[sound_id]["description"],
+                        "soundFile": f'/stream/sound/{sound_id}',
+                        "editLink": f"/admin/edit/sound_data/{sound_id}"
+                        })
+                data_sound_table = render_templates(
+                    path=cur_path_of_py_file+"/admin_templates/admin-edit-dataSound.txt",
+                    data={"soundDataRows": data_sound_table})
+                ct = render_templates(ct, {"soundData": data_sound_table})
+            except:
+                ct = render_templates(ct, {"soundData": f"Error Not Found Data In {config['local_storage']['sound data']}"})
         index_html = render_adminTemplates(content = ct)
         return HTMLResponse(index_html)
 
@@ -272,7 +279,7 @@ def adminSys():
                 content = render_templates(
                     path = cur_path_of_py_file+"/admin_templates/admin-edit-textarea.txt", 
                     data = { "filePath":filepath,
-                            "textFile":render_templates(path=parent_path+"/"+filepath)
+                            "textFile":render_templates(path=parent_path+"/"+filepath).replace("<", "&lt;")
                     })
             ))
         alert_mss = "Error : Invaild arguments"

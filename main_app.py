@@ -1,16 +1,14 @@
 from fastapi import FastAPI
-from fastapi.responses import Response, FileResponse, HTMLResponse
 import uvicorn
 import json
 import os
 import requests
-import random
 import platform
 import secrets
 from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
 
 def setConfigFile():
-    """create file config สร้างไฟล์config"""
+    """create file config สร้างไฟล์config ถ้าไฟล์ config มีปัญหา"""
     global cur_path_of_py_file
     open(cur_path_of_py_file+"/data/config.json", "w").write("""{"host": "localhost", "port": "8080", "parent path": "./", "template": {"home": "/templates/home.txt", "add_sound": "/templates/add_sound.txt", "info": "/templates/info.txt", "err404": "/templates/404.txt"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/data/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}}""")
     print("set config file")
@@ -33,11 +31,14 @@ def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
             render_templates("<h1>/*head1*/</h1>",{"head1":"Hello"})
             result : <h1>Hello</h1>
     """
-    #ช้ทดแทน Module templating ของ Fastapi ที่เกิดปัญหากับภาษาไทย
-    if path != "":
-        index_html = open(path, "r", encoding="utf-8").read()
-    for i in data:
-        index_html = index_html.replace(f"/*{i}*/", str(data[i]))
+    #ใช้ทดแทน Module templating ของ Fastapi ที่เกิดปัญหากับภาษาไทย
+    try:
+        if path != "":
+            index_html = open(path, "r", encoding="utf-8").read()
+        for i in data:
+            index_html = index_html.replace(f"/*{i}*/", str(data[i]))
+    except:
+        index_html = "Something Went Wrong Plase Check Path In Config"
     return index_html
 def redirect_url(url_path = "/"):
     """redirect_url"""
@@ -82,7 +83,11 @@ def send_to_discord(token="", ngrok_link=""):
             })
 
 
-app = FastAPI()
+app = FastAPI(
+    openapi_url = None,
+    docs_url = None,
+    redoc_url = None
+)
 KhunSangkeetE_Admin.app = app
 
 if __file__.find("\\") != -1:
