@@ -11,7 +11,7 @@
 </style>
 <div class="ct-form">
   <div>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger animate__animated animate__bounceInDown" role="alert">
       <h4 class="alert-heading">
         <span class="material-symbols-outlined"> warning </span>
         Danger!!
@@ -22,7 +22,7 @@
     </div>
     <form method="post" class="form-control">
       <h1>
-        <span class="material-symbols-outlined"> settings </span>
+        <span style="font-size:1.5em;" class="material-symbols-outlined animate__animated animate__rotateIn"> settings </span>
         config
       </h1>
       <table>
@@ -241,7 +241,7 @@
       </ol>\
       <div class='swal2-icon swal2-warning swal2-icon-show' style='display: flex;''><div class='swal2-icon-content'>!</div></div>\
       <h2>คำเตือน!!</h2><hr/> \
-      <p>ห้ามใช้ฟังก์ชั่น Ngrok บนMac OS!!</p>\
+      <p>ห้ามใช้ฟังก์ชั่น Ngrok บน Mac OS!!</p>\
       "
     });
   }

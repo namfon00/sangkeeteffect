@@ -1,7 +1,8 @@
 <div class="ct-form">
   <div>
-    <img width="100%" height="250px" src="https://img.freepik.com/premium-photo/welcome-different-language-paper-with-world-map-background-words-cloud-concept_505353-96.jpg" />
-    <div class="alert alert-success" role="alert">
+    <img width="100%" height="250px" class="animate__animated animate__bounceInDown"
+    src="https://img.freepik.com/premium-photo/welcome-different-language-paper-with-world-map-background-words-cloud-concept_505353-96.jpg" />
+    <div class="alert alert-success animate__animated animate__bounceInDown" role="alert">
       <h1 class="alert-heading animate__animated animate__bounceIn">Welcom Khun Sangkeet</h1>
       <img src="https://cdn.discordapp.com/attachments/1037334987235672096/1037358365375991839/KMITL-5.svg" />
       <img src="https://cdn.discordapp.com/attachments/1037334987235672096/1037358106746822717/IT-1.svg" />
@@ -20,7 +21,7 @@
       </span>
       Home
     </a>
-    <a class="list-admin-content" href="https://github.com/namfon00/sangkeeteffect/blob/main/README.md">
+    <a class="list-admin-content" href="https://github.com/namfon00/sangkeeteffect/wiki">
       <span class="material-symbols-outlined">
         description
       </span>

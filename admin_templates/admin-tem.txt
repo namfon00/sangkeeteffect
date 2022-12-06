@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link
       rel="icon"
       href="https://media.discordapp.net/attachments/1036704934432886876/1037745102967275621/music-1.png"
@@ -42,6 +41,7 @@
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"async defer></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap");
       :root{
@@ -128,7 +128,20 @@
         width: 100%;
         height: 100%;
       }
-      
+      .news-bar{
+        background: #ffffff;
+        border-bottom: solid 1px var(--bs-gray-400);
+        height: fit-content;
+        margin-bottom: -6px;
+      }
+      .news-bar>font{
+        padding-right: 10px;
+        padding-left: 10px;
+        border-right: solid 0.5px var(--bs-gray-800);
+      }
+      .news-bar>font:last-child{
+        border-right: none;
+      }
     </style>
     <script>
       const Toast = Swal.mixin({
@@ -154,6 +167,51 @@
         <span class="material-symbols-outlined"> logout </span>
       </a>
     </nav>
+    <marquee class="news-bar">
+      <img src="https://thumbs.gfycat.com/ConstantBlaringHornedviper-max-1mb.gif" 
+      style="transform:rotateY(180deg);height: 60px;margin-bottom: -25px;margin-top: -25px;">
+      <font>
+        <span class="material-symbols-outlined animate__animated animate__flash animate__slow animate__infinite">
+          auto_awesome
+        </span>
+        Welcome To Khun Sangkeet Admin Controls System Stable V.1.0.2 &nbsp;
+        <span class="material-symbols-outlined animate__animated animate__flash animate__slow animate__infinite">
+          auto_awesome
+        </span>
+        ยินดีต้อนรับเข้าสู่ระบบสังคีต Admin Controls System เวอร์ชั่น ๑.๐.๒
+      </font>
+      <font color="red">
+        <span class="material-symbols-outlined animate__animated animate__pulse  animate__infinite">
+          emergency_home
+        </span>
+        เปลี่ยนPortต้องเปลี่ยนก่อนรัน
+      </font>
+      <font color="red">
+        <span class="material-symbols-outlined animate__animated animate__pulse animate__infinite">
+          emergency_home
+        </span>
+        เปลี่ยนParent pathต้องเริ่มรันต้นใหม่อีกครั้ง
+      </font>
+      <font color="red">
+        <span class="material-symbols-outlined animate__animated animate__pulse animate__infinite">
+          dangerous
+        </span>
+        คำเตือน ห้ามใช้Function บน Mac OS เด็ดขาด
+      </font>
+      <font>
+        <img class="animate__animated animate__pulse animate__infinite" src="https://cdn.simpleicons.org/github/000" height="20px" />
+        ดูข้อมูลเพิ่มเติมที่ <a href="https://github.com/namfon00/sangkeeteffect">GitHub</a>
+      </font>
+      <font>
+        เครื่องหมาย
+        <span class="animate__animated animate__rubberBand animate__infinite" onclick="Swal.fire('อันนี้ไม่มีข้อมูลอะไร','','info')">
+          <span style="color:var(--bs-info);" class="material-symbols-outlined">
+            info
+          </span>
+        </span>
+        ในแต่ละจุดสามารถคลิกเพื่อดูข้อมูลเพื่อเติมได้
+      </font>
+    </marquee>
     <section class="big-content">
       <nav
         class="nav flex-column bg-dark bg-opacity-10 d-none d-sm-none d-md-block"
@@ -188,7 +246,7 @@
           </span>
           Fastapi NewDocs
         </a>
-        <a class="nav-link" href="https://github.com/namfon00/sangkeeteffect/blob/main/README.md">
+        <a class="nav-link" href="https://github.com/namfon00/sangkeeteffect/wiki">
           <span class="material-symbols-outlined">
             description
           </span>

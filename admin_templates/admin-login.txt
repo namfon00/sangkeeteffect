@@ -17,7 +17,8 @@
         <label class="animate__animated animate__bounceIn" style="display: block;text-align: left;" >Token</label>
         <div class="input-group">
           <span class="input-group-text">
-            <span class="animate__animated animate__heartBeat material-symbols-outlined animate__hover">
+            <span class="animate__animated animate__heartBeat material-symbols-outlined animate__hover"
+            onclick="Swal.fire('กดทำไม','','question')">
               vpn_key
               </span>
           </span>
@@ -30,3 +31,28 @@
     </center>
   </div>
 </div>
+
+<script>
+  document.body.addEventListener("submit", (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "You are not robot?",
+      html: '<center><div id="recaptcha"></div></center>',
+      didOpen: () => {
+        grecaptcha.render("recaptcha", {
+          sitekey: "6LfltzkjAAAAAIDo_3XNXKyGegOYQo6MyI3_4e3V",
+        });
+      },
+      preConfirm: function () {
+        if (grecaptcha.getResponse().length === 0) {
+          Swal.showValidationMessage(`Please verify that you're not a robot`);
+          e.preventDefault();
+        }
+      },
+    }).then((result) => {
+      if (grecaptcha.getResponse().length !== 0) {
+        document.forms[0].submit("");
+      }
+    });
+  });
+</script>

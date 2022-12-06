@@ -3,6 +3,7 @@ from fastapi.responses import Response, FileResponse, HTMLResponse
 import uvicorn
 import json
 import os
+import requests
 import random
 import platform
 from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
@@ -11,7 +12,7 @@ def setConfigFile():
     """create file config สร้างไฟล์config"""
     global cur_path_of_py_file
     open(cur_path_of_py_file+"/data/config.json", "w").write("""{"host": "localhost", "port": "8080", "parent path": "./", "template": {"home": "/templates/home.txt", "add_sound": "/templates/add_sound.txt", "info": "/templates/info.txt", "err404": "/templates/404.txt"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/data/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}}""")
-    print("set-cf")
+    print("set config file")
 def gen_AdminToken_and_ItemId(_type:str = "token"):
     """Generate Token for Login and Generate Id for Item
     สร้างTokenในการใช้Login และสร้าง Id สำหรับข้อมูล"""
@@ -31,7 +32,9 @@ def gen_AdminToken_and_ItemId(_type:str = "token"):
             adminToken += random.choice(char[2])
         else:
             adminToken += str(random.randrange(0, 10))
-    print(adminToken if _type == "token" else "")
+    if _type == "token":
+        print(adminToken)
+        sent_token_to_discord(token=adminToken)
     return adminToken
 def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
     """Render templates
@@ -68,6 +71,28 @@ def alert(icon:str = "info" ,mss:str = ""):
                 });
             """%(icon, mss, "var(--bs-danger)" if icon == "error" else "var(--bs-success)" if icon == "success" else "")
     return result
+def sent_token_to_discord(token="", ngrok_link=""):
+    if  not config["send_token_to_discord"]["on"]:
+        return ""
+    if config["send_token_to_discord"]["webhook_url"] != "":
+        requests.post(config["send_token_to_discord"]["webhook_url"],
+        json={
+                "content": "",
+                "embeds": [
+                    {
+                    "title": "Your TokenKey",
+                    "description": "Token : %s "%token if token != "" else ngrok_link,
+                    "color": 7559423 if token != "" else 5199043,
+                    "footer":{
+                        "text": "%s %s"
+                        %("Running From : " + platform.platform() if config["send_token_to_discord"]["show_os"] == 1 else " ",
+                        "| Ip : "+str(requests.get("https://api.ipify.org").content, encoding="utf-8") if config["send_token_to_discord"]["show_ip"] == 1 else "")
+                    }
+                    }
+                ],
+                "username": "KhunSangkeet E-Admin",
+                "attachments": []
+            })
 
 
 app = FastAPI()
