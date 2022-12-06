@@ -18,6 +18,7 @@ redirect = None
 alert = None
 alert_mss = ""
 serverOS = ""
+send_to_discord = None
 
 def adminSys():
     """admin system ระบบแอดมิน"""
@@ -27,9 +28,11 @@ def adminSys():
         global ngrokLink
         if bool(config["ngrok"]["on"]) and config["ngrok"]["token"] != "" and ngrokLink == "":
             ngrokModule.set_auth_token(config["ngrok"]["token"])
-            ngrokLink = "<tr><th>%s</th></tr>" % ngrokModule.connect(
+            ngrokLink = "%s" % ngrokModule.connect(
                 config["port"])
+            send_to_discord(ngrok_link = ngrokLink)
             print(ngrokLink)
+            ngrokLink = "<tr><th>%s</th></tr>" % ngrokLink
         elif not bool(config["ngrok"]["on"]):
             ngrokLink = ""
             ngrokModule.kill()
@@ -84,7 +87,7 @@ def adminSys():
         response.delete_cookie(key="adminToken")
         alert_mss = "Wrong Token โทเค็นผิดพลาด"
         return response
-
+        
 
     @app.get("/admin/logout")
     def logout(adminToken = Cookie("")):
@@ -196,6 +199,7 @@ def adminSys():
             setNgrok()
         config_js.write(json.dumps(config))
         config_js.close()
+        config = config
         alert_mss = "saved successfully บันทึกสำเร็จ"
         return HTMLResponse(redirect("/admin/config"))
 

@@ -6,6 +6,7 @@ import os
 import requests
 import random
 import platform
+import secrets
 from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
 
 def setConfigFile():
@@ -16,25 +17,11 @@ def setConfigFile():
 def gen_AdminToken_and_ItemId(_type:str = "token"):
     """Generate Token for Login and Generate Id for Item
     สร้างTokenในการใช้Login และสร้าง Id สำหรับข้อมูล"""
-    adminToken = ""
-    for _ in range(20):
-        i = random.randint(0,4)
-        char = [
-            [chr(c) for c in range(ord('A'), ord('Z'))],
-            ['!', '@', '#', '$', '%', '&', '-', '+'],
-            [chr(c) for c in range(ord('a'), ord('z'))]
-        ]
-        if i == 0:
-            adminToken += random.choice(char[0])
-        elif i == 1:
-            adminToken += random.choice(char[1]) if _type == "token" else str(random.randrange(0, 10))
-        elif i == 2:
-            adminToken += random.choice(char[2])
-        else:
-            adminToken += str(random.randrange(0, 10))
+    adminToken = secrets.token_urlsafe(20)
     if _type == "token":
+        adminToken = secrets.token_urlsafe(30)
         print(adminToken)
-        sent_token_to_discord(token=adminToken)
+        send_to_discord(token=adminToken)
     return adminToken
 def render_templates(index_html:str = "", data:dict = {}, path:str = ""):
     """Render templates
@@ -71,7 +58,7 @@ def alert(icon:str = "info" ,mss:str = ""):
                 });
             """%(icon, mss, "var(--bs-danger)" if icon == "error" else "var(--bs-success)" if icon == "success" else "")
     return result
-def sent_token_to_discord(token="", ngrok_link=""):
+def send_to_discord(token="", ngrok_link=""):
     if  not config["send_token_to_discord"]["on"]:
         return ""
     if config["send_token_to_discord"]["webhook_url"] != "":
@@ -80,8 +67,8 @@ def sent_token_to_discord(token="", ngrok_link=""):
                 "content": "",
                 "embeds": [
                     {
-                    "title": "Your TokenKey",
-                    "description": "Token : %s "%token if token != "" else ngrok_link,
+                    "title": "Your TokenKey" if token != "" else "Ngrok Link",
+                    "description": "%s "% "Token : " + token if token != "" else "Link : "+ngrok_link,
                     "color": 7559423 if token != "" else 5199043,
                     "footer":{
                         "text": "%s %s"
@@ -131,6 +118,7 @@ KhunSangkeetE_Admin.radminToken = gen_AdminToken_and_ItemId()
 KhunSangkeetE_Admin.render_templates = render_templates
 KhunSangkeetE_Admin.alert = alert
 KhunSangkeetE_Admin.serverOS = platform.system()
+KhunSangkeetE_Admin.send_to_discord = send_to_discord
 KhunSangkeetE_Admin.adminSys()
 app = KhunSangkeetE_Admin.app
 

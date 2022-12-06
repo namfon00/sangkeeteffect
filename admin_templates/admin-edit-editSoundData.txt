@@ -63,7 +63,7 @@
                     };
                   </script>
             <br/>
-            <input onclick="editor.save();" style="text-align: right;" type="submit" class="btn btn-success "  />
+            <input onclick="editor.save();setTimeout(show_saving(),500);" style="text-align: right;" type="submit" class="btn btn-success "  />
         </form>
     </div>
 </div>

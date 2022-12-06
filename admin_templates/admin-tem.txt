@@ -273,7 +273,19 @@
           elem.classList.add("animate__rubberBand")
           },1)
         })
-        
+      }
+
+      function show_saving(){
+        Swal.fire({
+        title: "Saving",
+        text: "Inprogress Plase wait for process...",
+        showConfirmButton: false,
+        allowOutsideClick:false,
+        timer: 99999999,
+        didOpen: () => {
+          Swal.showLoading()
+          }
+      });
       }
     </script>
     /*alert*/
