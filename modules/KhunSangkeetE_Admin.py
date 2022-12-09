@@ -19,7 +19,7 @@ render_templates = None
 redirect = None
 alert = None
 alert_mss = ""
-serverOS = ""
+limit_option = ""
 send_to_discord = None
 
 def adminSys():
@@ -33,7 +33,7 @@ def adminSys():
             ngrokLink = "%s" % ngrokModule.connect(
                 config["port"])
             send_to_discord(ngrok_link = ngrokLink)
-            print(ngrokLink)
+            print("\x1b[35m"+ngrokLink+"\x1b[0m")
             ngrokLink = "<tr><th>%s</th></tr>" % ngrokLink
         elif not bool(config["ngrok"]["on"]):
             ngrokLink = ""
@@ -130,7 +130,7 @@ def adminSys():
             "ngrokLink": ngrokLink,
             "ngrokCheck": "checked" if config["ngrok"]["on"] else "",
             "ngrokToken": config["ngrok"]["token"],
-            "serverOS": serverOS
+            "limitOption": limit_option
         }
         return HTMLResponse(render_adminTemplates(
             content = render_templates(
@@ -408,4 +408,3 @@ def adminSys():
         if adminToken != radminToken:
             return HTMLResponse(admin_redirect)
         return get_redoc_html(openapi_url="/openapi.json", title="FastAPI - Redoc")
-

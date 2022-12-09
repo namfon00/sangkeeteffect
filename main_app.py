@@ -5,7 +5,7 @@ import os
 import requests
 import platform
 import secrets
-from modules import KhunSangkeetE_Admin, KhunSangkeetE_User
+from modules import KhunSangkeetE_Admin, KhunSangkeetE_User, CheckRequireFile
 
 def setConfigFile():
     """create file config สร้างไฟล์config ถ้าไฟล์ config มีปัญหา"""
@@ -82,66 +82,68 @@ def send_to_discord(token="", ngrok_link=""):
                 "attachments": []
             })
 
+if CheckRequireFile.checkSys():
+    app = FastAPI(
+        openapi_url = None,
+        docs_url = None,
+        redoc_url = None
+    )
+    KhunSangkeetE_Admin.app = app
 
-app = FastAPI(
-    openapi_url = None,
-    docs_url = None,
-    redoc_url = None
-)
-KhunSangkeetE_Admin.app = app
+    if __file__.find("\\") != -1:
+        # Windows case กรณีใช้ Windows
+        cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
+    else:
+        # Linux / Mac case กรณีใช้ Linux / Mac
+        cur_path_of_py_file = __file__[:__file__.rfind("/")]
 
-if __file__.find("\\") != -1:
-    # Windows case กรณีใช้ Windows
-    cur_path_of_py_file = __file__[:__file__.rfind("\\")].replace("\\", "/")
-else:
-    # Linux / Mac case กรณีใช้ Linux / Mac
-    cur_path_of_py_file = __file__[:__file__.rfind("/")]
-
-config = ""
-try:
-    config = json.loads(
-        open(cur_path_of_py_file+"/data/config.json", "r", encoding="utf-8").read())
-    if config == "":
-        setConfigFile()
+    config = ""
+    try:
         config = json.loads(
             open(cur_path_of_py_file+"/data/config.json", "r", encoding="utf-8").read())
-except:
-    setConfigFile()
-    config = json.loads(
-        open(cur_path_of_py_file+"/data/config.json", "r", encoding="utf-8").read())        
+        if config == "":
+            setConfigFile()
+            config = json.loads(
+                open(cur_path_of_py_file+"/data/config.json", "r", encoding="utf-8").read())
+    except:
+        setConfigFile()
+        config = json.loads(
+            open(cur_path_of_py_file+"/data/config.json", "r", encoding="utf-8").read())        
 
-parent_path = config["parent path"] if config["parent path"] != "./" else cur_path_of_py_file
+    parent_path = config["parent path"] if config["parent path"] != "./" else cur_path_of_py_file
 
-KhunSangkeetE_Admin.cur_path_of_py_file = cur_path_of_py_file
-KhunSangkeetE_Admin.config = config
-KhunSangkeetE_Admin.adminTemPath = cur_path_of_py_file+"/admin_templates/admin-tem.txt"
-KhunSangkeetE_Admin.admin_redirect = redirect_url("/admin")
-KhunSangkeetE_Admin.redirect = redirect_url
-KhunSangkeetE_Admin.ngrok = bool(config["ngrok"]["on"])
-KhunSangkeetE_Admin.parent_path = parent_path
-KhunSangkeetE_Admin.radminToken = gen_AdminToken_and_ItemId()
-KhunSangkeetE_Admin.render_templates = render_templates
-KhunSangkeetE_Admin.alert = alert
-KhunSangkeetE_Admin.serverOS = platform.system()
-KhunSangkeetE_Admin.send_to_discord = send_to_discord
-KhunSangkeetE_Admin.adminSys()
-app = KhunSangkeetE_Admin.app
+    KhunSangkeetE_Admin.cur_path_of_py_file = cur_path_of_py_file
+    KhunSangkeetE_Admin.config = config
+    KhunSangkeetE_Admin.adminTemPath = cur_path_of_py_file+"/admin_templates/admin-tem.txt"
+    KhunSangkeetE_Admin.admin_redirect = redirect_url("/admin")
+    KhunSangkeetE_Admin.redirect = redirect_url
+    KhunSangkeetE_Admin.ngrok = bool(config["ngrok"]["on"])
+    KhunSangkeetE_Admin.parent_path = parent_path
+    KhunSangkeetE_Admin.radminToken = gen_AdminToken_and_ItemId()
+    KhunSangkeetE_Admin.render_templates = render_templates
+    KhunSangkeetE_Admin.alert = alert
+    KhunSangkeetE_Admin.serverOS = platform.system()
+    KhunSangkeetE_Admin.send_to_discord = send_to_discord
+    KhunSangkeetE_Admin.adminSys()
+    app = KhunSangkeetE_Admin.app
 
-KhunSangkeetE_User.app = app
-KhunSangkeetE_User.config = config
-KhunSangkeetE_User.parent_path = parent_path
-KhunSangkeetE_User.render_templates = render_templates
-KhunSangkeetE_User.genToken = gen_AdminToken_and_ItemId
-KhunSangkeetE_User.redirect = redirect_url
-KhunSangkeetE_User.userSys()
-app = KhunSangkeetE_User.app
+    KhunSangkeetE_User.app = app
+    KhunSangkeetE_User.config = config
+    KhunSangkeetE_User.parent_path = parent_path
+    KhunSangkeetE_User.render_templates = render_templates
+    KhunSangkeetE_User.genToken = gen_AdminToken_and_ItemId
+    KhunSangkeetE_User.redirect = redirect_url
+    KhunSangkeetE_User.userSys()
+    app = KhunSangkeetE_User.app
 
-class UnicornException(Exception):
-    def __init__(self, name: str):
-        self.name = name
+    class UnicornException(Exception):
+        def __init__(self, name: str):
+            self.name = name
 
-@app.get("/favicon.ico")
-def icon():
-    return "https://media.discordapp.net/attachments/1036704934432886876/1037321689073188894/cropped-it-logo.png"
+    @app.get("/favicon.ico")
+    def icon():
+        return "https://media.discordapp.net/attachments/1036704934432886876/1037321689073188894/cropped-it-logo.png"
 
-uvicorn.run(app, host=config["host"], port=int(config["port"]))
+    uvicorn.run(app, host=config["host"], port=int(config["port"]))
+else:
+     print("\x1b[31m Require File Error \x1b[0m")

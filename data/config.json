@@ -1,1 +1,33 @@
-{"host": "localhost", "port": "8080", "parent path": "./", "template": {"home": "home.html", "add_sound": "add_sound.html", "info": "info.html", "err404": "404.html"}, "ngrok": {"on": 0, "token": "2E9lFpayxjyEXqPEl1fCCiibujh_7S1itcMv8pfBofs5L3iWG"}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/data/sound", "cover path": "/cover"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}, "send_token_to_discord": {"on": 1, "webhook_url": "https://discordapp.com/api/webhooks/1047458066322436126/SHgAC5Chxi9Qr-X18qAYtQDYnnUp6IguHJUzFgbjS4e_ZfeYiF-R1vlxltqoyBxb7B5H", "show_os": 1, "show_ip": 0}}
+{
+  "host": "localhost",
+  "port": "8080",
+  "parent path": "./",
+  "template": {
+    "home": "home.html",
+    "add_sound": "add_sound.html",
+    "info": "info.html",
+    "err404": "404.html"
+  },
+  "ngrok": {
+    "on": 0,
+    "token": "2E9lFpayxjyEXqPEl1fCCiibujh_7S1itcMv8pfBofs5L3iWG"
+  },
+  "local_storage": {
+    "on": 1,
+    "sound data": "/data/sound_data.json",
+    "sound path": "/data/sound",
+    "cover path": "/cover"
+  },
+  "with_gform_and_gsheet": {
+    "on": 0,
+    "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8",
+    "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit",
+    "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"
+  },
+  "send_token_to_discord": {
+    "on": 0,
+    "webhook_url": "https://discordapp.com/api/webhooks/1047458066322436126/SHgAC5Chxi9Qr-X18qAYtQDYnnUp6IguHJUzFgbjS4e_ZfeYiF-R1vlxltqoyBxb7B5H",
+    "show_os": 0,
+    "show_ip": 0
+  }
+}

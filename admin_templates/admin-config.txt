@@ -230,12 +230,25 @@
 
 <script>
   document.getElementsByName("ngrok")[0].addEventListener("click", () => {
-    if ("/*serverOS*/" == "Darwin") {
+    if ("/*limitOption*/" === "True") {
       document.getElementsByName("ngrok")[0].checked = false;
       Swal.fire({
         icon: "error",
         title: "Not Available",
-        text: "This Function Not Available On Mac OS!! ฟังก์ชั่นนี้ไม่สามารถทำงานได้ในระบบMac OSได้",
+        text: "This Function Not Available!! ฟังก์ชั่นนี้ไม่สามารถทำงานได้",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true
+      });
+    }
+  });
+  document.getElementsByName("storageType")[1].addEventListener("click", () => {
+    if ("/*limitOption*/" === "True") {
+      document.getElementsByName("storageType")[1].checked = false;
+      Swal.fire({
+        icon: "error",
+        title: "Not Available",
+        text: "This Function Not Available!! ฟังก์ชั่นนี้ไม่สามารถทำงานได้",
         showConfirmButton: false,
         timer: 5000,
         timerProgressBar: true
@@ -253,17 +266,14 @@
         <img width='100%' src='https://cdn.discordapp.com/attachments/1036704934432886876/1045315629185515622/2565-11-24_19.18.04.png' /> \
         <br/><br/><li style='text-align:left;' >คัดลอกTokenมาเพื่อใช้</li>\
       </ol>\
-      <div class='swal2-icon swal2-warning swal2-icon-show' style='display: flex;''><div class='swal2-icon-content'>!</div></div>\
-      <h2>คำเตือน!!</h2><hr/> \
-      <p>ห้ามใช้ฟังก์ชั่น Ngrok บน Mac OS!!</p>\
       "
     });
   }
   function checkNgrokToken(){
-    let ngrok = document.getElementsByName("ngrok")[0]
-    let ngrokToken = document.getElementsByName("ngrokToken")[0]
+    let ngrok = document.getElementsByName("ngrok")[0];
+    let ngrokToken = document.getElementsByName("ngrokToken")[0];
     if(ngrok.checked == true && ngrokToken.value == ""){
-      ngrok.checked = false
+      ngrok.checked = false;
       Swal.fire(
         "ต้องใส่Ngrok Tokenก่อน",
         "",
@@ -271,5 +281,5 @@
       );
     }
   }
-  checkNgrokToken()
+  checkNgrokToken();
 </script>
