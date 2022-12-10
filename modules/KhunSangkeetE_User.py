@@ -13,7 +13,7 @@ genToken = None
 def userSys():
     global app
     @app.get("/")
-    async def home(adminToken=Cookie("")):
+    async def home():
         """หน้าแรกของเว็บ"""
         #ให้ Pyton เอา ข้อมูลเสียง(.json) และ ไฟล์เสียงมาแสดง
         try:
@@ -67,14 +67,13 @@ def userSys():
                         }))
 
     @app.get("/add_sound")
-    async def add_sound(adminToken=Cookie("")):
+    async def add_sound():
         # แสดง หน้าเว็บสำหรับเพิ่มไฟล์
         if config["local_storage"]["on"] == 1:
             return HTMLResponse(render_templates(
                 path=parent_path+"/templates/"+config["template"]["add_sound"], 
                 data={
-                    "id":genToken("id"),
-                    "call":("showAdminBt();" if adminToken != "" else "")
+                    "id":genToken("id")
                     }))
         return HTMLResponse(redirect(config["with_gform_and_gsheet"]["form_link"]))
     @app.post("/add_sound")
@@ -103,7 +102,7 @@ def userSys():
         return HTMLResponse(redirect(config["with_gform_and_gsheet"]["form_link"]))
 
     @app.get("/search")
-    async def search(keyword: str = "",adminToken=Cookie("")):
+    async def search(keyword: str = ""):
         """หน้าสำหรับแสดงผลค้นหา"""
         try:
             if keyword == "":
@@ -129,7 +128,7 @@ def userSys():
         except:
             return HTMLResponse(redirect("/"))
     @app.get("/info/{_id}")
-    async def show_info_sound(_id:str = "",adminToken=Cookie("")):
+    async def show_info_sound(_id:str = ""):
         """หน้าแสดงข้อมูลเสียง"""
         #แสดงข้อฒุลเสียง
         try:
