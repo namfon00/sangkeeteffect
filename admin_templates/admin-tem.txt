@@ -168,7 +168,11 @@
   <body>
     <nav class="navbar bg-dark bg-gradient bg-opacity-10">
       <a href="/admin" class="nav-bar-content">
-        <h1>Khun Sangkeet E-Admin</h1>
+      
+        <h1>
+        <img src="https://media.discordapp.net/attachments/1037668191335362574/1051015624912019577/IMG_3612.png?width=585&height=585" width="50px">
+          
+          Khun Sangkeet E-Admin</h1>
       </a>
       <a href="/admin/logout" class="nav-bar-content">
         <span class="material-symbols-outlined"> logout </span>
