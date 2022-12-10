@@ -149,6 +149,11 @@
       .news-bar>font:last-child{
         border-right: none;
       }
+      @keyframes loop_1_rotate {
+        from{transform: rotate(0deg);}
+        to{transform: rotate(360deg);}
+      }
+
     </style>
     <script>
       const Toast = Swal.mixin({
@@ -170,7 +175,7 @@
       <a href="/admin" class="nav-bar-content">
       
         <h1>
-        <img src="https://media.discordapp.net/attachments/1037668191335362574/1051015624912019577/IMG_3612.png?width=585&height=585" width="50px">
+        <img style="animation: loop_1_rotate 5s infinite linear;" src="https://media.discordapp.net/attachments/1037668191335362574/1051015624912019577/IMG_3612.png?width=585&height=585" width="50px" />
           
           Khun Sangkeet E-Admin</h1>
       </a>
