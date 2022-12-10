@@ -1,0 +1,110 @@
+<style>
+    tr{
+        vertical-align: middle;
+    }
+    table{
+        gap:10px;
+    }
+    tr{
+        border-bottom:solid 1px var(--bs-gray-300)
+    }
+    tr:hover{
+        background:var(--bs-gray-200);
+    }
+    th, td{
+        padding:10px;
+    }
+    .result{
+        background: #000123;
+        color: #fff;
+        border-color: #fff;
+        font-family: "source code pro";
+        min-height: 500px;
+    }
+    .result>font{
+        font-family: "source code pro";
+    }
+    .danger{
+        color: #ef2929;
+    }
+    .success{
+        color: #8ae234;
+    }
+</style>
+<div class="ct-form">
+    <div>
+        <section class="form-control">
+        <h1>
+            <span style="font-size:1.5em;" class="material-symbols-outlined">
+                playlist_add_check
+            </span>
+            Check Error 
+        </h1>
+            <table>
+                <tr style="background:#aaa;">
+                    <th>Topic</th>
+                    <th>Sub Topic</th>
+                    <th>Check</th>
+                </tr>
+                <tr>
+                    <th>Check Local Storage</th>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=all_local_storage" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;" ></th>
+                    <td>Data Storage Path</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=sound data" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>Sound Storage Path</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=sound path" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th> Storage With Gsheet</th>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=all_with_gform_and_gsheet" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;" ></th>
+                    <td>Google Form Link</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=form_link" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>Google Sheet Link</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=sheet_link" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>Google Sheet Link As CSV</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=csv_link" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <a class="btn btn-primary" href="?topic=all" style="width: 100%;" onclick="show_saving()">Check All Topic</a>
+            <br/>
+        </section>
+        <br/>
+        <br/>
+        /*result*/
+        <br/>
+        <br/>
+    </div>
+</div>

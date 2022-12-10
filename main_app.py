@@ -3,6 +3,7 @@ import uvicorn
 import json
 import os
 from modules import KhunSangkeetE_Admin, KhunSangkeetE_User, FunctionForModule, CheckRequireFile
+from modules import KhunSangkeetE_Admin_SubSystem
 
 app = FastAPI(
     openapi_url = None,
@@ -46,6 +47,19 @@ if CheckRequireFile.checkSys():
     KhunSangkeetE_Admin.send_to_discord = FunctionForModule.send_to_discord
     KhunSangkeetE_Admin.adminSys()
     app = KhunSangkeetE_Admin.app
+
+    KhunSangkeetE_Admin_SubSystem.app = app
+    KhunSangkeetE_Admin_SubSystem.radminToken = KhunSangkeetE_Admin.radminToken
+    KhunSangkeetE_Admin_SubSystem.admin_redirect = FunctionForModule.redirect_url("/admin")
+    KhunSangkeetE_Admin_SubSystem.cur_path_of_py_file = cur_path_of_py_file
+    KhunSangkeetE_Admin_SubSystem.parent_path = parent_path
+    KhunSangkeetE_Admin_SubSystem.config = config
+    KhunSangkeetE_Admin_SubSystem.adminTemPath = cur_path_of_py_file+"/admin_templates/admin-tem.txt"
+    KhunSangkeetE_Admin_SubSystem.render_templates = FunctionForModule.render_templates
+    KhunSangkeetE_Admin_SubSystem.redirect = FunctionForModule.redirect_url
+    KhunSangkeetE_Admin_SubSystem.alert = FunctionForModule.alert
+    KhunSangkeetE_Admin_SubSystem.adminSubSys()
+    app = KhunSangkeetE_Admin_SubSystem.app
 
     KhunSangkeetE_User.app = app
     KhunSangkeetE_User.config = config
