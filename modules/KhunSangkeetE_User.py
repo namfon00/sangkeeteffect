@@ -63,7 +63,7 @@ def userSys():
             return HTMLResponse(render_templates(
                 path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "keyword":"มีบางอย่างผิดพลาดโปรดติดต่อผู้ดูแล"
+                        "soundData":"มีบางอย่างผิดพลาดโปรดติดต่อผู้ดูแล"
                         }))
 
     @app.get("/add_sound")
@@ -105,25 +105,52 @@ def userSys():
     async def search(keyword: str = ""):
         """หน้าสำหรับแสดงผลค้นหา"""
         try:
+            soundDataHTML = ""
             if keyword == "":
                 return HTMLResponse(redirect("/"))
             if config["local_storage"]["on"] == 1:
                 soundData = json.loads(open(parent_path+config["local_storage"]["sound data"], "r", encoding="utf-8").read())
-                result = [data for data in soundData if keyword.upper() in soundData[data]["name"].upper() or keyword.upper() in soundData[data]["description"].upper()]
+                for _id in soundData:
+                    if keyword.upper() in soundData[_id]["name"].upper():
+                        soundDataHTML += f"""<div class="card" id="{_id}" onclick="togglePlay('{_id}','/stream/sound/{_id}')">
+                                <center>
+                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
+                                music_note
+                                </span>
+                                <p>{soundData[_id]["name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
+                                info
+                                </span>
+                                </a>
+                                </p>
+                                </center>
+                            </div>"""
                 return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundData,
+                        "soundData":soundDataHTML,
                         }
                 ))
             soundData = pd.read_csv(config["with_gform_and_gsheet"]["csv_link"])
             soundData = soundData.to_dict("index")
-            # https://drive.google.com/uc?export=download&id=1W6HHUsc6pGZ4BWwWPemAiX9AJryfobRV
-            result = [data for data in soundData if keyword.upper() in soundData[data]["Sound Name"].upper() or keyword.upper() in soundData[data]["Description"].upper()]
+            # https://drive.google.com/uc?export=download&id=
+            for _id in soundData:
+                    if keyword.upper() in soundData[_id]["Sound Name"].upper():
+                        soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
+                                <center>
+                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
+                                music_note
+                                </span>
+                                <p>{soundData[_id]["Sound Name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
+                                info
+                                </span>
+                                </a>
+                                </p>
+                                </center>
+                            </div>"""
             return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundData
+                        "soundData":soundDataHTML
                         }))
         except:
             return HTMLResponse(redirect("/"))
