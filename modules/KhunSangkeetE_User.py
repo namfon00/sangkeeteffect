@@ -19,14 +19,41 @@ def userSys():
         try:
             if config["local_storage"]["on"] == 1:
                 soundData = json.loads(open(parent_path+config["local_storage"]["sound data"], "r").read())
+                soundDataHTML = ""
+                for _id in soundData.keys():
+                    soundDataHTML += f"""<div class="card" id="{_id}" onclick="togglePlay('{_id}','/stream/sound/{_id}')">
+                                <center>
+                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
+                                music_note
+                                </span>
+                                <p>{soundData[_id]["name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
+                                info
+                                </span>
+                                </a>
+                                </p>
+                                </center>
+                            </div>"""
                 return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundData
+                        "soundData":soundDataHTML
                         }))
             soundData = pd.read_csv(config["with_gform_and_gsheet"]["csv_link"])
             soundData = soundData.to_dict("index")
             #https://drive.google.com/uc?export=download&id=
+            for _id in soundData.keys():
+                    soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
+                                <center>
+                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
+                                music_note
+                                </span>
+                                <p>{soundData[_id]["Sound Name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
+                                info
+                                </span>
+                                </a>
+                                </p>
+                                </center>
+                            </div>"""
             return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
