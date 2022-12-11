@@ -73,6 +73,20 @@
     transform-origin: center top;
     background-color: rgb(164, 204, 255);
   }
+  .box{
+    margin: 10vh;
+    background-color: #fff;
+    border-radius: 5px;
+    min-height: 60vh;
+    height: fit-content;
+    padding: 20px;
+  }
+  .box>div{
+    margin: 20px;
+    min-height: 40vh;
+    border-radius: 10px;
+    border: solid #555 1px;
+  }
   
 </style>
   </head>
@@ -107,8 +121,8 @@
           </li>
         </ul>
       </div>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="ค้นหา" aria-label="Search">
+      <form class="d-flex" role="search" action="/search">
+        <input name="keyword" class="form-control me-2" type="search" placeholder="ค้นหา" aria-label="Search">
         <button class="btn btn-outline-light" type="submit">
           <span class="material-symbols-outlined">
             search
@@ -118,39 +132,20 @@
     </div>
   </nav>
   <center>
-    <img src="https://media.discordapp.net/attachments/1050293532264497155/1050295740469100574/IMG_4871.PNG?width=1410&height=648" width="500" height="">
-  </center>
-  <center>
-  <section class="borin">
-    <div class="card-ctn"> 
-         <h3>ชื่อเสียง:/*soundName*/</h3>
-    </div>
-</section>
-  </center>
-  <center>
-    <section class="card-ctn">
-      <div class="card">
-          <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey; margin-top:2cm; ">
-            music_note
-            </span>
+    <div class="box">
+      <h1>/*soundName*/</h1>
+      <img height="300px" src="https://img.freepik.com/free-icon/black-music-icon_318-9277.jpg?w=1380&t=st=1670747387~exp=1670747987~hmac=46bc4ec3c74ed9b727719ad0e76432939cad46c60ec88618c2bab4e2bc7e1cde" />
+      <br/>
+      <audio src="/*link*/" controls></audio>
+      <br/>
+      <div>
+        <h2>Description</h2>
+        <p>
+          /*description*/
+        </p>
       </div>
-    </section>
+    </div>
   </center>
-    <center>
-    <section class="bor">
-        <div class="card-ctn"> 
-             <h3>ไฟล์เสียง:<audio controls src="/*link*/"></audio></h3>
-        </div>
-    </section>
-    </center>
-    <center>
-    <section class="borfile">
-        <div class="card-ctn"> 
-             <h3>เกี่ยวกับเสียง:/*description*/
-             </h3>
-        </div>
-    </section>
-    </center>
     <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
