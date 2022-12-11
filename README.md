@@ -33,3 +33,58 @@ pip install -r requirements.txt
 ```
 python3 {path ของ main_app.py}
 ```
+# ความต้องการ
+* python 3.10 ++
+* fastapi == 0.86.0
+* uvicorn[standard] == 0.19.0
+* python-multipart == 0.0.5
+* pyngrok == 5.1.0
+* pandas
+# ไฟล์/โฟลเดอร์
+* การเปลี่ยนที่อยู่ของไฟล์
+ห้ามเปลี่ยนที่อยู่ของไฟล์ หรือ โฟรเดอร์ตามรายการที่มี*โดยเด็ดขาดต่อไปนี้!!
+```
+sangkeeteffect
+│   .DS_Store
+│   main_app.py*
+│   README.md
+│   requirements.txt*
+│
+│
+├───admin_templates*
+│       admin-config.txt*
+│       admin-edit-dataSound.txt*
+│       admin-edit-dataSoundRow.txt*
+│       admin-edit-editSoundData.txt*
+│       admin-edit-textarea.txt*
+│       admin-edit.txt*
+│       admin-login-wrongToken.txt*
+│       admin-login.txt*
+│       admin-tem.txt*
+│       admin-welcome-showNgrokLink.txt*
+│       admin-welcome.txt*
+│
+├───data*
+│   │   config.json*
+│   │   sound_data.json*
+│   │
+│   └───sound*
+│
+│
+├───modules*
+│   │   CheckRequireFile.py*
+│   │   KhunSangkeetE_Admin.py*
+│   │   KhunSangkeetE_User.py*
+│   │
+│
+└───templates*
+        404.html
+        add_sound.html
+        home.html
+        info.html
+
+```
+
+
+# ฟังก์ชั่น
++ ฟังก์ชั่นNgrok ต้องใส่ Ngrok Token(หาได้จาก https://dashboard.ngrok.com/) จึงจะใช้งานได้
