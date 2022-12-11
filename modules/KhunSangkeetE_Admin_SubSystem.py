@@ -24,10 +24,27 @@ def adminSubSys():
         return result_html
     def checkForAdminCheck(topic):
         result = ""
+        if topic == "home"\
+        or topic == "add_sound"\
+        or topic == "info"\
+        or topic == "err404":
+            try:
+                f = open(parent_path+"/templates/"+config["template"][topic], "r", encoding="utf-8").read()
+                if f.strip() == "":
+                    result += "<font class='warning'>Warning This File Is Blank : </font>/templates/"+config["template"][topic]
+                    del f
+                else:
+                    result += "<font class='success'>No Problem With : </font>/templates/"+config["template"][topic]
+            except:
+                result += "<font class='danger'>Error File Not Exist : </font>/templates/"+config["template"][topic]
         if topic == "sound data":
             try:
-                open(parent_path+config["local_storage"][topic])
-                result += "<font class='success'>No Problem With : </font>"+config["local_storage"][topic]
+                f = open(parent_path+config["local_storage"][topic], "r", encoding="utf-8").read()
+                if f.strip() == "":
+                    result += "<font class='warning'>Warning This File Is Blank : </font>"+config["local_storage"][topic]
+                    del f
+                else:
+                    result += "<font class='success'>No Problem With : </font>"+config["local_storage"][topic]
             except:
                 result += "<font class='danger'>Error File Not Exist : </font>"+config["local_storage"][topic]
         elif topic == "sound path":
@@ -41,9 +58,14 @@ def adminSubSys():
         or topic == "csv_link":
             req = requests.get(config["with_gform_and_gsheet"][topic])
             if req.status_code//100 == 2:
-                result += f"<font class='success'>No Problem Requests Status Code : </font>{req.status_code}"
+                result += f"<font class='success'>No Problem {topic} Requests Status Code : </font>{req.status_code}"
             else:
                 result += f"<font class='danger'>Requests Error Status Code : </font>{req.status_code}"
+        if topic == "all_template" or topic == "all":
+            result += checkForAdminCheck("home")+"<br/>"
+            result += checkForAdminCheck("add_sound")+"<br/>"
+            result += checkForAdminCheck("info")+"<br/>"
+            result += checkForAdminCheck("err404")+"<br/>"
         if topic == "all_local_storage" or topic == "all":
             result += checkForAdminCheck("sound data")+"<br/>"
             result += checkForAdminCheck("sound path")+"<br/>"
