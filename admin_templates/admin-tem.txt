@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="icon"
-      href="https://media.discordapp.net/attachments/1036704934432886876/1037745102967275621/music-1.png"
+      href="https://media.discordapp.net/attachments/1037668191335362574/1050997245388009483/32832a8605961937.png?width=1036&height=1036"
     />
     <!-- Bootstrap 5.2.2 -->
     <link
@@ -168,7 +168,7 @@
         },
       });
     </script>
-    <title>Khun Sangkeet Admin Controls</title>
+    <title>Sangkeet Controls</title>
   </head>
   <body>
     <nav class="navbar bg-dark bg-gradient bg-opacity-10">
@@ -177,7 +177,7 @@
         <h1>
         <img style="animation: loop_1_rotate 5s infinite linear;" src="https://media.discordapp.net/attachments/1037668191335362574/1051015624912019577/IMG_3612.png?width=585&height=585" width="50px" />
           
-          Khun Sangkeet E-Admin</h1>
+          Sangkeet Controls</h1>
       </a>
       <a href="/admin/logout" class="nav-bar-content">
         <span class="material-symbols-outlined"> logout </span>
@@ -194,7 +194,7 @@
         <span class="material-symbols-outlined animate__animated animate__flash animate__slow animate__infinite">
           auto_awesome
         </span>
-        ยินดีต้อนรับเข้าสู่ระบบสังคีต Admin Controls
+        ยินดีต้อนรับเข้าสู่ระบบสังคีต Controls
       </font>
       <font color="red">
         <span class="material-symbols-outlined animate__animated animate__pulse  animate__infinite">
@@ -249,6 +249,12 @@
             edit
           </span>
           Edit
+        </a>
+        <a class="nav-link" href="/admin/check">
+          <span class="material-symbols-outlined">
+            playlist_add_check
+          </span>
+          Check Error
         </a>
         <a class="nav-link" href="/docs">
           <span class="material-symbols-outlined">

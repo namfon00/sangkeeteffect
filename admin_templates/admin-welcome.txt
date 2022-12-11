@@ -15,30 +15,29 @@
 
     <div class="form-control">
     <h2>Topic</h2>
-    <a class="list-admin-content" href="admin">
+    <a class="list-admin-content" href="/admin">
       <span class="material-symbols-outlined">
         home
       </span>
       Home
     </a>
-    <a class="list-admin-content" href="https://github.com/namfon00/sangkeeteffect/wiki">
-      <span class="material-symbols-outlined">
-        description
-      </span>
-      Documents
-    </a>
-    <a class="list-admin-content" href="admin/config">
+    <a class="list-admin-content" href="/admin/config">
       <span class="material-symbols-outlined">
         settings
       </span>
       Config
     </a>
-    <a class="list-admin-content" href="admin/edit">
+    <a class="list-admin-content" href="/admin/edit">
       <span class="material-symbols-outlined">
         edit
       </span>
       Edit
-      
+    </a>
+    <a class="list-admin-content" href="/admin/check">
+      <span class="material-symbols-outlined">
+        playlist_add_check
+      </span>
+      Check Error
     </a>
     <a class="list-admin-content" href="/docs">
       <img height="20px" src="https://static-00.iconduck.com/assets.00/fastapi-icon-512x512-a7ggfxfw.png" />
@@ -47,6 +46,12 @@
     <a class="list-admin-content" href="/redoc">
       <img height="20px" src="https://static-00.iconduck.com/assets.00/fastapi-icon-512x512-a7ggfxfw.png" />
       Fastapi Alternative API docs
+    </a>
+    <a class="list-admin-content" href="https://github.com/namfon00/sangkeeteffect/wiki">
+      <span class="material-symbols-outlined">
+        description
+      </span>
+      Documents
     </a>
     </div>
     <br/><br/>
@@ -84,5 +89,6 @@
         SupaschaiPh
       </a>
     </div>
+    <br/><br/>
   </div>
 </div>
