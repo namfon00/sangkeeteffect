@@ -13,67 +13,46 @@ genToken = None
 def userSys():
     global app
     @app.get("/")
-    async def home():
+    async def home(adminToken=Cookie("")):
         """หน้าแรกของเว็บ"""
         #ให้ Pyton เอา ข้อมูลเสียง(.json) และ ไฟล์เสียงมาแสดง
         try:
             if config["local_storage"]["on"] == 1:
                 soundData = json.loads(open(parent_path+config["local_storage"]["sound data"], "r").read())
-                soundDataHTML = ""
-                for _id in soundData.keys():
-                    soundDataHTML += f"""<div class="card" id="{_id}" onclick="togglePlay('{_id}','/stream/sound/{_id}')">
-                                <center>
-                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
-                                music_note
-                                </span>
-                                <p>{soundData[_id]["name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
-                                info
-                                </span>
-                                </a>
-                                </p>
-                                </center>
-                            </div>"""
                 return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundDataHTML
+                        "soundDataJson":soundData,
+                        "result":list(soundData.keys()),
+                        "call":"showResult();"+("showAdminBt();" if adminToken != "" else "")
                         }))
             soundData = pd.read_csv(config["with_gform_and_gsheet"]["csv_link"])
             soundData = soundData.to_dict("index")
-            #https://drive.google.com/uc?export=download&id=
-            for _id in soundData.keys():
-                    soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
-                                <center>
-                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
-                                music_note
-                                </span>
-                                <p>{soundData[_id]["Sound Name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
-                                info
-                                </span>
-                                </a>
-                                </p>
-                                </center>
-                            </div>"""
+            #https://drive.google.com/uc?export=download&id=1W6HHUsc6pGZ4BWwWPemAiX9AJryfobRV
             return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundData
+                        "soundDataJson":soundData,
+                        "result":list(soundData.keys()),
+                        "call":"showResult2();"+("showAdminBt();" if adminToken != "" else "")
                         }))
         except:
             return HTMLResponse(render_templates(
                 path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":"มีบางอย่างผิดพลาดโปรดติดต่อผู้ดูแล"
+                        "keyword":"Some Thing Went Wrong Plase Check At <a href='/admin/check'>Check</a>" if adminToken != "" else "Some Thing Went Wrong Plase Contact Admin",
+                        "call":"showMessage();"+("showAdminBt();" if adminToken != "" else "")
                         }))
 
     @app.get("/add_sound")
-    async def add_sound():
+    async def add_sound(adminToken=Cookie("")):
         # แสดง หน้าเว็บสำหรับเพิ่มไฟล์
         if config["local_storage"]["on"] == 1:
             return HTMLResponse(render_templates(
                 path=parent_path+"/templates/"+config["template"]["add_sound"], 
                 data={
-                    "id":genToken("id")
+                    "id":genToken("id"),
+                    "call":("showAdminBt();" if adminToken != "" else "")
                     }))
         return HTMLResponse(redirect(config["with_gform_and_gsheet"]["form_link"]))
     @app.post("/add_sound")
@@ -102,60 +81,38 @@ def userSys():
         return HTMLResponse(redirect(config["with_gform_and_gsheet"]["form_link"]))
 
     @app.get("/search")
-    async def search(keyword: str = ""):
+    async def search(keyword: str = "",adminToken=Cookie("")):
         """หน้าสำหรับแสดงผลค้นหา"""
         try:
-            soundDataHTML = ""
             if keyword == "":
                 return HTMLResponse(redirect("/"))
             if config["local_storage"]["on"] == 1:
                 soundData = json.loads(open(parent_path+config["local_storage"]["sound data"], "r", encoding="utf-8").read())
-                for _id in soundData:
-                    if keyword.upper() in soundData[_id]["name"].upper():
-                        soundDataHTML += f"""<div class="card" id="{_id}" onclick="togglePlay('{_id}','/stream/sound/{_id}')">
-                                <center>
-                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
-                                music_note
-                                </span>
-                                <p>{soundData[_id]["name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
-                                info
-                                </span>
-                                </a>
-                                </p>
-                                </center>
-                            </div>"""
+                result = [data for data in soundData if keyword.upper() in soundData[data]["name"].upper() or keyword.upper() in soundData[data]["description"].upper()]
                 return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundDataHTML,
-                        }
-                ))
+                        "keyword":keyword,
+                        "result":result,
+                        "soundDataJson":soundData,
+                        "call":"showResult();"+("showAdminBt();" if adminToken != "" else "")
+                        }))
             soundData = pd.read_csv(config["with_gform_and_gsheet"]["csv_link"])
             soundData = soundData.to_dict("index")
-            # https://drive.google.com/uc?export=download&id=
-            for _id in soundData:
-                    if keyword.upper() in soundData[_id]["Sound Name"].upper():
-                        soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
-                                <center>
-                                <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
-                                music_note
-                                </span>
-                                <p>{soundData[_id]["Sound Name"]}<a href="/info/{_id}"><span class="material-symbols-outlined">
-                                info
-                                </span>
-                                </a>
-                                </p>
-                                </center>
-                            </div>"""
+            # https://drive.google.com/uc?export=download&id=1W6HHUsc6pGZ4BWwWPemAiX9AJryfobRV
+            result = [data for data in soundData if keyword.upper() in soundData[data]["Sound Name"].upper() or keyword.upper() in soundData[data]["Description"].upper()]
             return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundDataHTML
+                        "keyword":keyword,
+                        "result":result,
+                        "soundDataJson":soundData,
+                        "call":"showResult2();"+("showAdminBt();" if adminToken != "" else "")
                         }))
         except:
             return HTMLResponse(redirect("/"))
     @app.get("/info/{_id}")
-    async def show_info_sound(_id:str = ""):
+    async def show_info_sound(_id:str = "",adminToken=Cookie("")):
         """หน้าแสดงข้อมูลเสียง"""
         #แสดงข้อฒุลเสียง
         try:
@@ -167,7 +124,8 @@ def userSys():
                         "id":_id,
                         "soundName":soundData[_id]["name"],
                         "description":soundData[_id]["description"],
-                        "link":"/stream/sound/"+_id
+                        "link":"/stream/sound/"+_id,
+                        "call":"showAdminBt();" if adminToken != "" else ""
                     }
                     ))
             soundData = pd.read_csv(config["with_gform_and_gsheet"]["csv_link"])
@@ -178,8 +136,8 @@ def userSys():
                     "id":_id,
                     "soundName":soundData[int(_id)]["Sound Name"],
                     "description":soundData[int(_id)]["Description"],
-                    "link":"https://drive.google.com/uc?export=download&id="+soundData[int(_id)]["Sound File"].split("?id=")[1]
-                
+                    "link":"https://drive.google.com/uc?export=download&id="+soundData[int(_id)]["Sound File"].split("?id=")[1],
+                    "call":"showAdminBt();" if adminToken != "" else ""
                 }
                 ))
         except:
@@ -195,7 +153,7 @@ def userSys():
                 open(parent_path+config["local_storage"]["sound path"]+"/"+_id+".mp3", "r")
                 return FileResponse(parent_path+config["local_storage"]["sound path"]+"/"+_id+".mp3")
             except:
-                return HTMLResponse("มีบางผิดตกปิโปรดตรวจสอบว่าไฟล์มีอยู่หรือไม่!?")
+                return HTMLResponse("Something Went Wrong Plase Check Path Or File Are Exist")
         return HTMLResponse(redirect("/"))
 
     @app.exception_handler(404)
