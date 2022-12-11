@@ -4,6 +4,7 @@ import json
 import os
 from modules import KhunSangkeetE_Admin, KhunSangkeetE_User, FunctionForModule, CheckRequireFile
 from modules import KhunSangkeetE_Admin_SubSystem
+from modules import KhunSangkeetE_API
 
 app = FastAPI(
     openapi_url = None,
@@ -69,6 +70,12 @@ if CheckRequireFile.checkSys():
     KhunSangkeetE_User.redirect = FunctionForModule.redirect_url
     KhunSangkeetE_User.userSys()
     app = KhunSangkeetE_User.app
+
+    KhunSangkeetE_API.app = app
+    KhunSangkeetE_API.config = config
+    KhunSangkeetE_API.parent_path = parent_path
+    KhunSangkeetE_API.APISys()
+    app = KhunSangkeetE_API.app
 
     class UnicornException(Exception):
         def __init__(self, name: str):
