@@ -19,3 +19,17 @@
 * ส่วนเพิ่มเติม
   * หน้าSwagger UI
   * หน้าAlternative API documentation
+# วิธีการใช้quickstart
+1.เปลี่ยน directory 
+``` 
+cd {path ของโฟลเดอร์ sangkeeteffect}
+```
+
+2.โหลด Requirements 
+```
+pip install -r requirements.txt
+```
+3.รัน app ด้วยคำสั่งด้านล่างนี้
+```
+python3 {path ของ main_app.py}
+```
