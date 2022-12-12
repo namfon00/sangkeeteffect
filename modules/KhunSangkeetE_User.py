@@ -17,9 +17,9 @@ def userSys():
         """หน้าแรกของเว็บ"""
         #ให้ Pyton เอา ข้อมูลเสียง(.json) และ ไฟล์เสียงมาแสดง
         try:
+            soundDataHTML = ""
             if config["local_storage"]["on"] == 1:
                 soundData = json.loads(open(parent_path+config["local_storage"]["sound data"], "r").read())
-                soundDataHTML = ""
                 for _id in soundData.keys():
                     soundDataHTML += f"""<div class="card" id="{_id}" onclick="togglePlay('{_id}','/stream/sound/{_id}')">
                                 <center>
@@ -42,7 +42,7 @@ def userSys():
             soundData = soundData.to_dict("index")
             #https://drive.google.com/uc?export=download&id=
             for _id in soundData.keys():
-                    soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
+                    soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id=")+4:]}')">
                                 <center>
                                 <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
                                 music_note
@@ -57,7 +57,7 @@ def userSys():
             return HTMLResponse(render_templates(
                     path=parent_path+"/templates/"+config["template"]["home"], 
                     data={
-                        "soundData":soundData
+                        "soundData":soundDataHTML
                         }))
         except:
             return HTMLResponse(render_templates(
@@ -135,7 +135,7 @@ def userSys():
             # https://drive.google.com/uc?export=download&id=
             for _id in soundData:
                     if keyword.upper() in soundData[_id]["Sound Name"].upper():
-                        soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id="):+4]}')">
+                        soundDataHTML += f"""<div class="card" onclick="togglePlay('{_id}','https://drive.google.com/uc?export=download&id={soundData[_id]["Sound File"][soundData[_id]["Sound File"].find("?id=")+4:]}')">
                                 <center>
                                 <span class="material-symbols-outlined" style="font-size: 100px;font-weight: 1500; color: grey">
                                 music_note
