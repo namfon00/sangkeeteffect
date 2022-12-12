@@ -30,12 +30,15 @@
     .success{
         color: #8ae234;
     }
+    .warning{
+        color: #C19C00;
+    }
 </style>
 <div class="ct-form">
     <div>
         <section class="form-control">
         <h1>
-            <span style="font-size:1.5em;" class="material-symbols-outlined">
+            <span style="font-size:1.5em;" class="material-symbols-outlined animate__animated animate__jello">
                 playlist_add_check
             </span>
             Check Error 
@@ -46,6 +49,43 @@
                     <th>Sub Topic</th>
                     <th>Check</th>
                 </tr>
+
+                <tr>
+                    <th>Template</th>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=all_template" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;" ></th>
+                    <td>Home</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=home" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>Add Sound</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=add_sound" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>Info</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=info" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background: #e0e0e0;"></th>
+                    <td>404</td>
+                    <td>
+                        <a class="btn btn-primary" href="?topic=err404" onclick="show_saving()">Check</a>
+                    </td>
+                </tr>
+
                 <tr>
                     <th>Check Local Storage</th>
                     <td></td>
@@ -99,6 +139,7 @@
             </table>
             <br/>
             <a class="btn btn-primary" href="?topic=all" style="width: 100%;" onclick="show_saving()">Check All Topic</a>
+            <br/>
             <br/>
         </section>
         <br/>
