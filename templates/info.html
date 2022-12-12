@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>สังคีตเอฟเฟกต์/*text*/</title>
+    <title>สังคีตเอฟเฟกต์</title>
     <!-- CSS only -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="https://media.discordapp.net/attachments/1037668191335362574/1050987581183119481/IMG_3609.png?width=1036&height=1036" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Srisakdi&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -76,6 +77,7 @@
   .box{
     margin: 10vh;
     background-color: #fff;
+    border: solid rgb(210, 210, 210) 1px;
     border-radius: 5px;
     min-height: 60vh;
     height: fit-content;
@@ -85,7 +87,8 @@
     margin: 20px;
     min-height: 40vh;
     border-radius: 10px;
-    border: solid #555 1px;
+    border: solid rgb(162, 160, 160) 1px;
+    padding: 10px;
   }
   
 </style>
@@ -134,16 +137,27 @@
   <center>
     <div class="box">
       <h1>/*soundName*/</h1>
-      <img height="300px" src="https://img.freepik.com/free-icon/black-music-icon_318-9277.jpg?w=1380&t=st=1670747387~exp=1670747987~hmac=46bc4ec3c74ed9b727719ad0e76432939cad46c60ec88618c2bab4e2bc7e1cde" />
+      <br/>
+      <br/>
+      <img height="250px" src="https://img.freepik.com/free-icon/black-music-icon_318-9277.jpg?w=1380&t=st=1670747387~exp=1670747987~hmac=46bc4ec3c74ed9b727719ad0e76432939cad46c60ec88618c2bab4e2bc7e1cde" />
+      <br/>
       <br/>
       <audio src="/*link*/" controls></audio>
       <br/>
       <div>
-        <h2>Description</h2>
-        <p>
+        <h2 style="text-align: left;">Description</h2>
+        <p style="text-align: left;">
           /*description*/
         </p>
       </div>
+      <a class="btn btn-info" 
+      href="/*link*/" download="/*soundName*/"
+      style="width: 100%;"
+      >
+      <span class="material-symbols-outlined">
+        download
+      </span>
+    </a>
     </div>
   </center>
     <!-- JavaScript Bundle with Popper -->
