@@ -183,7 +183,7 @@ def adminSys():
         config["template"]["info"] = info
         config["template"]["err404"] = err404
         # config ประเภทที่เก็บข้อมูล และ ที่อยู่ของข้อมูล
-        if storageType == "local":
+        if storageType == "local" or limit_option:
             config["with_gform_and_gsheet"]["on"] = 0
             config["local_storage"]["on"] = 1
         else:
@@ -195,7 +195,7 @@ def adminSys():
         config["with_gform_and_gsheet"]["sheet_link"] = sheetLink
         config["with_gform_and_gsheet"]["csv_link"] = sheetLinkCSV
         # config ngrok
-        if ngrok:
+        if ngrok and not limit_option:
             config["ngrok"]["on"] = 1
             config["ngrok"]["token"] = ngrokToken
             setNgrok()
