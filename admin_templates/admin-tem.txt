@@ -208,12 +208,6 @@
         </span>
         เปลี่ยนParent pathต้องเปลี่ยนก่อนรัน (./ = pathปัจจุบันของmain_app.py)
       </font>
-      <font color="red">
-        <span class="material-symbols-outlined animate__animated animate__pulse animate__infinite">
-          dangerous
-        </span>
-        คำเตือน ห้ามใช้Function Ngrok บน Mac OS เด็ดขาด
-      </font>
       <font>
         <img class="animate__animated animate__pulse animate__infinite" src="https://cdn.simpleicons.org/github/000" height="20px" />
         ดูข้อมูลเพิ่มเติมที่ <a href="https://github.com/namfon00/sangkeeteffect">GitHub</a>
