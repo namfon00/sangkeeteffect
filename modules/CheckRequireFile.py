@@ -40,7 +40,8 @@ list_req_file_in_adminTemplate = [
     'admin-config.txt', 
     'admin-login.txt', 
     'admin-welcome.txt', 
-    'admin-login-wrongToken.txt'
+    'admin-login-wrongToken.txt',
+    'admin-checkError.txt'
     ]
 req_file_content = {
     'config.json':json.dumps({"host": "localhost", "port": "8080", "parent path": "./", "template": {"home": "home.html", "add_sound": "add_sound.html", "info": "info.html", "err404": "404.html"}, "ngrok": {"on": 0, "token": ""}, "local_storage": {"on": 1, "sound data": "/data/sound_data.json", "sound path": "/data/sound"}, "with_gform_and_gsheet": {"on": 0, "form_link": "https://forms.gle/TCcyW8BmLQJmcbtC8", "sheet_link": "https://docs.google.com/spreadsheets/d/1OU-fN7NAYX68PAAeAm-W3ppEa3eFSE0dtsL-Glxn0ZI/edit", "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTcV3Nob9Hk2j2eKRQpP3IaYZ1UFCPVQ9YGdmnAzl5TorIi7DhDcA5e7EJWQCI_8nXkuuqx5l5YdBwY/pub?gid=203295964&single=true&output=csv"}, "send_token_to_discord": {"on": 1, "webhook_url": "https://discord.com/api/webhooks/1045772264399962125/cueDxMti8ihX2HtKuUrWYXRsVMgU_stHBtvQz-3wPND8J9M7aB2DNIt6Wko9EmWe6BGq", "show_os": 1, "show_ip": 1}}), 
@@ -56,6 +57,7 @@ req_file_content = {
     'admin-edit-dataSound.txt': "#from_internet",#get_content_from_github("admin-edit-dataSound.txt"), 
     'admin-edit-dataSoundRow.txt': "#from_internet",#get_content_from_github("admin-edit-dataSoundRow.txt"), 
     'admin-edit-editSoundData.txt': "#from_internet",#get_content_from_github("admin-edit-editSoundData.txt"),
+    'admin-checkError.txt':"#from_internet"
 }
 check_list = []
 gb_want_to_fix = False
