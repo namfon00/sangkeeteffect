@@ -107,6 +107,7 @@
                 type="radio"
                 name="storageType"
                 value="local"
+                onclick="checkGsheetForm()"
                 checked
               />
               <label class="form-check-label"> Local Storage </label>
@@ -142,7 +143,7 @@
           <th>
             <div class="form-chec form-switch">
               <input class="form-check-input" type="radio" name="storageType"
-              value="gsheet" /*withGsheetCheck*/ />
+              value="gsheet" /*withGsheetCheck*/ onclick="checkGsheetForm()" />
               <label class="form-check-label"> Storage With Gsheet </label>
             </div>
           </th>
@@ -219,11 +220,12 @@
         <tr>
           <td></td>
           <td style="text-align: right">
-            <input value="Save" class="btn btn-success" type="submit" onclick="setTimeout(show_saving(),500)" />
+            <input value="Save" class="btn btn-success" type="submit" onclick="checkGsheetForm();checkNgrokToken();setTimeout(show_saving(),500)" />
           </td>
         </tr>
       </table>
     </form>
+    <br/><br/>
   </div>
 </div>
 
@@ -269,9 +271,61 @@
       "
     });
   }
+  function checkGsheetForm(){
+    let storageType = document.getElementsByName("storageType");
+    let gFormLink = document.getElementsByName("gFormLink")[0];
+    let sheetLink = document.getElementsByName("sheetLink")[0];
+    let sheetLinkCSV = document.getElementsByName("sheetLinkCSV")[0];
+    let dataJson = document.getElementsByName("dataStorage")[0];
+    let soundStorage = document.getElementsByName("soundStorage")[0];
+    if(storageType[0].checked == true && (dataJson.value == "" || soundStorage.value == "")){
+      Swal.fire(
+        "แจ้งเตือน",
+        "ต้องใส่ Data Storage Path และ Sound Storage Path	ให้ครบ",
+        "warning"
+      );
+    }
+    else if(storageType[1].checked == true && (gFormLink.value == "" || sheetLink.value == "" || sheetLinkCSV == "")){
+      storageType[0].checked = true;
+      storageType[1].checked = false;
+      Swal.fire(
+        "เปิดใช้งานไม่ได้",
+        "ต้องใส่ Goole Form Link, Google Sheet Link	 และ Google Sheet Link As CSV	ให้ครบก่อน",
+        "warning"
+      );
+    }
+    else if(storageType[0].checked == true){
+      dataJson.readOnly = true;
+      soundStorage.readOnly = true;
+      dataJson.style.background = "#e9ecef";
+      soundStorage.style.background = "#e9ecef";
+
+      gFormLink.readOnly = false;
+      sheetLink.readOnly = false;
+      sheetLinkCSV.readOnly = false;
+      gFormLink.style.background = "none";
+      sheetLink.style.background = "none";
+      sheetLinkCSV.style.background = "none";
+    }
+    else if(storageType[1].checked == true){
+      dataJson.readOnly = false;
+      soundStorage.readOnly = false;
+      dataJson.style.background = "none";
+      soundStorage.style.background = "none";
+
+      gFormLink.readOnly = true;
+      sheetLink.readOnly = true;
+      sheetLinkCSV.readOnly = true;
+      gFormLink.style.background = "#e9ecef";
+      sheetLink.style.background = "#e9ecef";
+      sheetLinkCSV.style.background = "#e9ecef";
+    }
+    
+  }
   function checkNgrokToken(){
     let ngrok = document.getElementsByName("ngrok")[0];
     let ngrokToken = document.getElementsByName("ngrokToken")[0];
+    ngrokToken.readonly = true
     if(ngrok.checked == true && ngrokToken.value == ""){
       ngrok.checked = false;
       Swal.fire(
@@ -279,7 +333,17 @@
         "",
         "warning"
       );
+      return false
+    }
+    else if(ngrok.checked == true){
+      ngrokToken.readOnly = true
+      ngrokToken.style.background = "#e9ecef";
+    }
+    else{
+      ngrokToken.readOnly = false
+      ngrokToken.style.background = "none";
     }
   }
   checkNgrokToken();
+  checkGsheetForm();
 </script>
